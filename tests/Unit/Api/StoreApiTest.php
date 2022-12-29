@@ -11,7 +11,7 @@ class StoreApiTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_stores()
     {
         $this->assertTrue(true);
     }
