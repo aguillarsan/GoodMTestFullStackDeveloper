@@ -24,10 +24,11 @@
                 </ul>
 
                 <div class="row">
+                    <v-skeleton-store v-show="load"></v-skeleton-store>
                     <div class="col-lg-4 mb-4" v-for="(store, index) in stores.data">
                         <router-link :to="'/store/'+ store.id" class="select-card text-decoration-none" href="#">
                             <div class="card card-store">
-                                <div class="store-image mb-3">
+                                <div class="store-image mb-3" :style="store | setBackgroundImageStore">
                                     <div class="store-container">
                                         <div class="store-detail">
                                             <span class="badge text-inherit badge-primary mb-1 fs-6">hoy {{store.opening_hours}} -
@@ -46,7 +47,7 @@
                                 </div>
                                 <div class="store-logo">
                                     <div class="logo">
-                                        <img src="/images/logos/logo.webp">
+                                        <img :src="store.logo_store">
                                     </div>
                                 </div>
                                 <div class="store-footer">
@@ -60,12 +61,12 @@
                                             <div class="store-distance-ubication">
                                                 <div>
                                                     <img src="/images/icons/person-walking.png" width="18"> <span
-                                                        class="text-variant-dark">45
+                                                        class="text-variant-dark">{{store.foot_distance}}
                                                         min</span>
                                                 </div>
                                                 <div>
                                                     <i class="uil uil-map-marker" style="font-size:20px"></i>
-                                                    <span class="text-variant-dark">5 km</span>
+                                                    <span class="text-variant-dark">{{store.distance_kilometers}} km</span>
                                                 </div>
 
                                             </div>
@@ -85,10 +86,15 @@
     </div>
 </template>
 <script>
+    import skeletonLoad from '../skeleton/skeletonLoad.vue'
     export default {
+        components:{
+          'v-skeleton-store':skeletonLoad
+        },
         data() {
             return {
-                stores:[]
+                stores:[],
+                load:true
             }
         },
         created() {
@@ -98,8 +104,10 @@
             getStores(){
                 axios.get('/api/stores').then(response=>{
                     this.stores = response.data.stores
+                    this.load = false
                 })
-            }
+            },
+           
         },
     }
 

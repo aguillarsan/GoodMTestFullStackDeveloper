@@ -17,7 +17,7 @@
             return {
                 optionsMenu: [
                     { name: 'Inicio', icon: 'uil uil-estate', rute: '/home' },
-                    { name: 'Ordenes', icon: 'uil uil-receipt-alt', rute: '/orders' },
+                    { name: 'Órdenes', icon: 'uil uil-receipt-alt', rute: '/orders' },
                     { name: 'Perfil', icon: 'uil uil-users-alt', rute: '/profile' }
                 ]
             }

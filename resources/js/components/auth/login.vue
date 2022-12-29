@@ -33,11 +33,11 @@
                         <div>
                             <router-link :to="'/register'">Registarse</router-link>
                         </div>
-                        <div><a href="page-forgot-password.html" class="text-muted">Forgot Password?</a></div>
+                        <!-- <div><a href="page-forgot-password.html" class="text-muted">Forgot Password?</a></div> -->
                     </div>
 
                     <div class="d-flex w-100 mt-8">
-                        <button type="submit" class="btn btn-primary w-100 btn-rounded btn-lg">Iniciar Sesión</button>
+                        <button type="button" class="btn btn-primary w-100 btn-rounded btn-lg" @click="saveSessionAsGuest()">Iniciar Sesión</button>
                     </div>
 
                 </form>
@@ -45,7 +45,14 @@
         </div>
     </div>
 </template>
-<style>
+<script>
+    export default {
+        methods: {
+            saveSessionAsGuest() {
+                localStorage.setItem('guest', true)
+                this.$router.push('/home')
+            }
+        },
 
-
-</style>
+    }
+</script>

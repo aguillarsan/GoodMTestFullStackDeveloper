@@ -29,9 +29,101 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div");
+  return _c("div", [_c("div", {
+    staticClass: "appHeader-app text-light d-flex"
+  }, [_c("div", {
+    staticClass: "left"
+  }, [_c("a", {
+    staticClass: "headerButton goBack",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.$router.go(-1);
+      }
+    }
+  }, [_c("i", {
+    staticClass: "uil uil-angle-left-b md hydrated"
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "pageTitle text-dark"
+  }, [_vm._v("Detalle de la orden")]), _vm._v(" "), _c("div", {
+    staticClass: "right"
+  })]), _vm._v(" "), _vm._m(0)]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "d-flex flex-column flex-column-fluid"
+  }, [_c("div", {
+    staticClass: "app-content flex-column-fluid"
+  }, [_c("div", {
+    staticClass: "app-container container-xxl mt-10 mb-60 no-mt"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between align-items-center mb-4",
+    attrs: {
+      id: "order_detail"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center justify-content-center"
+  }, [_c("span", {
+    staticClass: "fs-w-500 fs-4"
+  }, [_vm._v("Detalle de la orden")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row justify-content-center mt-5"
+  }, [_c("div", {
+    staticClass: "col-lg-6 mb-4"
+  }, [_c("div", {
+    staticClass: "card card-order p-25"
+  }, [_c("div", {
+    staticClass: "order-container"
+  }, [_c("div", {
+    staticClass: "order-header"
+  }, [_c("div", {
+    staticClass: "ribbon-order ribbon-label"
+  }, [_vm._v("Rescatada")])]), _vm._v(" "), _c("div", {
+    staticClass: "order-body mt-8 d-flex"
+  }, [_c("div", {
+    staticClass: "order-detail w-100"
+  }, [_c("div", {
+    staticClass: "display-grid"
+  }, [_c("h2", [_vm._v("Fork bilbao")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("Dirección: Av san carlos 01863")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("Horario de retiro: 09:00 a 19:00")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("Fecha de retiro: 25/06/2022")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("Nro° orden: 268595")]), _vm._v(" "), _c("div", {
+    staticClass: "separator"
+  }), _vm._v(" "), _c("h5", {
+    staticClass: "fs-5"
+  }, [_vm._v("Productos")]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-center justify-content-between"
+  }, [_c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("2")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("kit XXL")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("$13.500")])]), _vm._v(" "), _c("div", {
+    staticClass: "separator"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-center justify-content-between"
+  }, [_c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("Delivery")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-400"
+  }, [_vm._v("$3.500")])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-center justify-content-between"
+  }, [_c("div", {
+    staticClass: "fs-5 fs-w-600"
+  }, [_vm._v("Monto Total")]), _vm._v(" "), _c("div", {
+    staticClass: "fs-5 fs-w-600 mt-3"
+  }, [_vm._v("$17.000")])])])])])])])])])])])]);
+}];
 render._withStripped = true;
 
 

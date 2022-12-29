@@ -19,8 +19,8 @@
         components: {
             'v-navBar': navBar,
             'v-sideBar': sideBar,
-            'v-app-bottom-menu':appBottomMenu
+            'v-app-bottom-menu': appBottomMenu
         },
-      
+
     }
 </script>

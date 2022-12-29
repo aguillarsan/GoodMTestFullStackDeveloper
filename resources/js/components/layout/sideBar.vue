@@ -19,16 +19,6 @@
                 </li>
             </ul>
             <ul class="logout-mode pd-l no-padding-left">
-                <li class="mode">
-                    <a href="">
-                        <i class="uil uil-moon"></i>
-                        <span class="link-name">Dark Mode</span>
-                    </a>
-                    <div class="mode-toggle">
-                        <span class="switch"></span>
-                    </div>
-
-                </li>
                 <li>
                     <a href="#" @click.prevent="logout()">
                         <i class="uil uil-signout"></i>

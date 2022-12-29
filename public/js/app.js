@@ -2144,7 +2144,7 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'uil uil-estate',
         rute: '/home'
       }, {
-        name: 'Ordenes',
+        name: 'Órdenes',
         icon: 'uil uil-receipt-alt',
         rute: '/orders'
       }, {
@@ -2420,14 +2420,7 @@ var staticRenderFns = [function () {
     staticClass: "d-flex"
   }, [_c("h6", {
     staticClass: "m-r-15"
-  }, [_vm._v("name User Login")]), _vm._v(" "), _c("img", {
-    staticStyle: {
-      "border-radius": "50%"
-    },
-    attrs: {
-      src: "/images/avatar/default.png"
-    }
-  })])]);
+  }, [_vm._v("Invitado")])])]);
 }];
 render._withStripped = true;
 
@@ -2471,7 +2464,7 @@ var render = function render() {
     }, [_vm._v(_vm._s(link.name))])])], 1);
   }), 0), _vm._v(" "), _c("ul", {
     staticClass: "logout-mode pd-l no-padding-left"
-  }, [_vm._m(1), _vm._v(" "), _c("li", [_c("a", {
+  }, [_c("li", [_c("a", {
     attrs: {
       href: "#"
     },
@@ -2503,24 +2496,6 @@ var staticRenderFns = [function () {
   })]), _vm._v(" "), _c("span", {
     staticClass: "logo_name"
   }, [_vm._v("\n            GoodMeal\n        ")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("li", {
-    staticClass: "mode"
-  }, [_c("a", {
-    attrs: {
-      href: ""
-    }
-  }, [_c("i", {
-    staticClass: "uil uil-moon"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "link-name"
-  }, [_vm._v("Dark Mode")])]), _vm._v(" "), _c("div", {
-    staticClass: "mode-toggle"
-  }, [_c("span", {
-    staticClass: "switch"
-  })])]);
 }];
 render._withStripped = true;
 
@@ -2615,6 +2590,12 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
       }
       return 0;
     });
+    vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('setBackgroundImageStore', function (store) {
+      if (store) {
+        var image = 'background-image:url(' + store.image_store + ')';
+        return image;
+      }
+    });
   }
 }).$mount('#app');
 
@@ -2698,6 +2679,9 @@ var Profile = function Profile() {
 var storeDetail = function storeDetail() {
   return __webpack_require__.e(/*! import() | chunks/home/storeDetail */ "chunks/home/storeDetail").then(__webpack_require__.bind(__webpack_require__, /*! ./components/home/storeDetail.vue */ "./resources/js/components/home/storeDetail.vue"));
 };
+var ShoppingCart = function ShoppingCart() {
+  return __webpack_require__.e(/*! import() | chunks/shopping-cart/cartProducts */ "chunks/shopping-cart/cartProducts").then(__webpack_require__.bind(__webpack_require__, /*! ./components/shopping-cart/cartproducts.vue */ "./resources/js/components/shopping-cart/cartproducts.vue"));
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -2708,7 +2692,7 @@ var storeDetail = function storeDetail() {
     path: '/',
     name: 'base',
     beforeEnter: function beforeEnter(to, from, next) {
-      if (!localStorage.getItem('authToken') && !localStorage.getItem('guest')) {
+      if (!localStorage.getItem('guest')) {
         return next('/welcome');
       }
       return next('/home');
@@ -2739,13 +2723,14 @@ var storeDetail = function storeDetail() {
     children: [{
       path: '/home',
       name: 'Home',
-      component: Home,
-      beforeEnter: function beforeEnter(to, from, next) {
-        if (localStorage.getItem('authToken') || localStorage.getItem('guest')) {
-          return next();
-        }
-        return next('/login');
-      }
+      component: Home
+      // beforeEnter: (to, from, next) => {
+      //     // if (localStorage.getItem('authToken') || localStorage.getItem('guest')) {
+      //     //     return next();
+      //     // }
+      //     // return next('/login')
+
+      // },
     }, {
       path: '/store/:store_id',
       name: 'Store Detail',
@@ -2760,33 +2745,47 @@ var storeDetail = function storeDetail() {
     }, {
       path: '/orders',
       name: 'Orders',
-      component: Orders,
-      beforeEnter: function beforeEnter(to, from, next) {
-        if (localStorage.getItem('authToken')) {
-          return next();
-        }
-        return next('/login');
-      }
+      component: Orders
+      // beforeEnter: (to, from, next) => {
+      //     if (localStorage.getItem('authToken')) {
+      //         return next();
+      //     }
+      //     return next('/login')
+
+      // },
     }, {
-      path: '/orders/oder_id',
+      path: '/order/:oder_id',
       name: 'order detail',
-      component: OrderDetail,
-      beforeEnter: function beforeEnter(to, from, next) {
-        if (localStorage.getItem('authToken')) {
-          return next();
-        }
-        return next('/login');
-      }
+      component: OrderDetail
+      // beforeEnter: (to, from, next) => {
+      //     if (localStorage.getItem('authToken')) {
+      //         return next();
+      //     }
+      //     return next('/login')
+
+      // },
     }, {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
-      beforeEnter: function beforeEnter(to, from, next) {
-        if (localStorage.getItem('authToken')) {
-          return next();
-        }
-        return next('/login');
-      }
+      component: Profile
+      // beforeEnter: (to, from, next) => {
+      //     if (localStorage.getItem('authToken')) {
+      //         return next();
+      //     }
+      //     return next('/login')
+
+      // },
+    }, {
+      path: '/shopping-cart',
+      name: 'shopping cart',
+      component: ShoppingCart
+      // beforeEnter: (to, from, next) => {
+      //     if (localStorage.getItem('authToken')) {
+      //         return next();
+      //     }
+      //     return next('/login')
+
+      // },
     }]
   }],
   scrollBehavior: function scrollBehavior() {
@@ -36420,7 +36419,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"chunks/auth/login":1,"chunks/auth/register":1,"chunks/auth/welcome":1,"chunks/home/index":1,"chunks/orders/order":1,"chunks/orders/orderDetail":1,"chunks/profile/profile":1,"chunks/home/storeDetail":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"chunks/auth/login":1,"chunks/auth/register":1,"chunks/auth/welcome":1,"chunks/home/index":1,"chunks/orders/order":1,"chunks/orders/orderDetail":1,"chunks/profile/profile":1,"chunks/home/storeDetail":1,"chunks/shopping-cart/cartProducts":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

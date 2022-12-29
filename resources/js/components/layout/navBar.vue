@@ -2,8 +2,8 @@
     <div class="top" id="navBar">
         <i class="uil uil-bars sidebar-toggle"></i>
         <div class="d-flex">
-            <h6 class="m-r-15">name User Login</h6>
-            <img src="/images/avatar/default.png" style="border-radius:50%" />
+            <h6 class="m-r-15">Invitado</h6>
+          
         </div>
     </div>
 </template>

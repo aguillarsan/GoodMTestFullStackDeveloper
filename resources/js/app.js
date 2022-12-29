@@ -20,7 +20,7 @@ Vue.use(VueRouter);
 
 const app = new Vue({
     router: new VueRouter(routes),
-    mounted(){
+    mounted() {
         Vue.filter('moneyFormat', function (value) {
             if (value) {
                 if (value % 1 == 0) {
@@ -33,5 +33,16 @@ const app = new Vue({
             return 0
 
         });
+        Vue.filter('setBackgroundImageStore', function (store) {
+            if (store) {
+                const image = 'background-image:url(' + store.image_store + ')';
+                return image
+
+            }
+
+        });
+
+
+
     }
 }).$mount('#app')

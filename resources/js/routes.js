@@ -10,6 +10,7 @@ let Orders = () => import(/* webpackChunkName: "chunks/orders/order"*/'./compone
 let OrderDetail = () => import(/* webpackChunkName: "chunks/orders/orderDetail"*/'./components/orders/orderDetail.vue')
 let Profile = () => import(/* webpackChunkName: "chunks/profile/profile"*/'./components/profile/profile.vue')
 let storeDetail = () => import(/* webpackChunkName: "chunks/home/storeDetail"*/'./components/home/storeDetail.vue')
+let ShoppingCart = () => import(/* webpackChunkName: "chunks/shopping-cart/cartProducts"*/'./components/shopping-cart/cartproducts.vue')
 export default ({
     mode: 'history',
     base: process.env.BASE_URL,
@@ -19,7 +20,7 @@ export default ({
             path: '/',
             name: 'base',
             beforeEnter: (to, from, next) => {
-                if (!localStorage.getItem('authToken') && !localStorage.getItem('guest')) {
+                if (!localStorage.getItem('guest')) {
                     return next('/welcome')
                 }
                 return next('/home')
@@ -46,13 +47,13 @@ export default ({
             children: [
                 {
                     path: '/home', name: 'Home', component: Home,
-                    beforeEnter: (to, from, next) => {
-                        if (localStorage.getItem('authToken') || localStorage.getItem('guest')) {
-                            return next();
-                        }
-                        return next('/login')
+                    // beforeEnter: (to, from, next) => {
+                    //     // if (localStorage.getItem('authToken') || localStorage.getItem('guest')) {
+                    //     //     return next();
+                    //     // }
+                    //     // return next('/login')
 
-                    },
+                    // },
                 },
                 {
                     path: '/store/:store_id', name: 'Store Detail', component: storeDetail,
@@ -68,33 +69,43 @@ export default ({
                 
                 {
                     path: '/orders', name: 'Orders', component: Orders,
-                    beforeEnter: (to, from, next) => {
-                        if (localStorage.getItem('authToken')) {
-                            return next();
-                        }
-                        return next('/login')
+                    // beforeEnter: (to, from, next) => {
+                    //     if (localStorage.getItem('authToken')) {
+                    //         return next();
+                    //     }
+                    //     return next('/login')
 
-                    },
+                    // },
                 },
                 {
-                    path: '/orders/oder_id', name: 'order detail', component: OrderDetail,
-                    beforeEnter: (to, from, next) => {
-                        if (localStorage.getItem('authToken')) {
-                            return next();
-                        }
-                        return next('/login')
+                    path: '/order/:oder_id', name: 'order detail', component: OrderDetail,
+                    // beforeEnter: (to, from, next) => {
+                    //     if (localStorage.getItem('authToken')) {
+                    //         return next();
+                    //     }
+                    //     return next('/login')
 
-                    },
+                    // },
                 },
                 {
                     path: '/profile', name: 'Profile', component: Profile,
-                    beforeEnter: (to, from, next) => {
-                        if (localStorage.getItem('authToken')) {
-                            return next();
-                        }
-                        return next('/login')
+                    // beforeEnter: (to, from, next) => {
+                    //     if (localStorage.getItem('authToken')) {
+                    //         return next();
+                    //     }
+                    //     return next('/login')
 
-                    },
+                    // },
+                },
+                {
+                    path: '/shopping-cart', name: 'shopping cart', component: ShoppingCart,
+                    // beforeEnter: (to, from, next) => {
+                    //     if (localStorage.getItem('authToken')) {
+                    //         return next();
+                    //     }
+                    //     return next('/login')
+
+                    // },
                 },
             ]
 

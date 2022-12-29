@@ -22,10 +22,11 @@ class CreateStoresTable extends Migration
             $table->integer('old_price');
             $table->string('opening_hours');
             $table->string('closing_time');
-            $table->string('distance_kilometers');
-            $table->string('foot_distance');
-            $table->string('image_store');
-            $table->string('logo_store');
+            $table->string('distance_kilometers')->nullable();
+            $table->string('foot_distance')->nullable();
+            $table->integer('qualification')->nullable();
+            $table->string('image_store')->nullable();;
+            $table->string('logo_store')->nullable();;
             $table->timestamps();
             $table->softDeletes();
 

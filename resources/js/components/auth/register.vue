@@ -40,10 +40,21 @@
                         </div>
                     </div>
                     <div class="d-flex w-100 mt-8">
-                        <button type="submit" class="btn btn-primary w-100 btn-rounded btn-lg">Iniciar Sesión</button>
+                        <button type="submit" class="btn btn-primary w-100 btn-rounded btn-lg" @click.prevent="saveSessionAsGuest">Registrarse</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </template>
+<script>
+    export default {
+        methods: {
+            saveSessionAsGuest() {
+                localStorage.setItem('guest', true)
+                this.$router.push('/home')
+            }
+        },
+
+    }
+</script>

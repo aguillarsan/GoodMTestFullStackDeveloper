@@ -29,9 +29,91 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div");
+  return _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "d-flex flex-column flex-column-fluid"
+  }, [_c("div", {
+    staticClass: "app-content flex-column-fluid"
+  }, [_c("div", {
+    staticClass: "app-container container-xxl mt-10 mb-60 no-mt"
+  }, [_vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "row mt-5"
+  }, _vm._l(6, function (l, index) {
+    return _c("div", {
+      staticClass: "col-lg-4 mb-4"
+    }, [_c("router-link", {
+      staticClass: "text-decoration-none",
+      attrs: {
+        to: "/order/" + 6
+      }
+    }, [_c("div", {
+      staticClass: "card card-order"
+    }, [_c("div", {
+      staticClass: "order-container"
+    }, [_c("div", {
+      staticClass: "order-header"
+    }, [_c("div", {
+      staticClass: "fs-w-500 fs-6 text-secondary-variant"
+    }, [_vm._v("25/06/2022")]), _vm._v(" "), _c("div", {
+      staticClass: "ribbon-order ribbon-label"
+    }, [_vm._v("Rescatada")])]), _vm._v(" "), _c("div", {
+      staticClass: "order-body mt-3 d-flex justify-content-between"
+    }, [_c("div", {
+      staticClass: "order-detail"
+    }, [_c("div", {
+      staticClass: "display-grid"
+    }, [_c("div", {
+      staticClass: "fs-w-500 text-dark"
+    }, [_vm._v("Tienda: Os Market")]), _vm._v(" "), _c("div", {
+      staticClass: "fs-w-500 text-dark"
+    }, [_vm._v("Nro° Order: 1819189")]), _vm._v(" "), _c("div", {
+      staticClass: "fs-w-500 text-dark"
+    }, [_vm._v("Monto Total: $15.500")]), _vm._v(" "), _c("div", {
+      staticClass: "fs-w-500 text-dark"
+    }, [_vm._v("Horario: 09:00 a 19:00")])])]), _vm._v(" "), _c("div", {
+      staticClass: "order-access"
+    }, [_c("i", {
+      staticClass: "uil uil-arrow-circle-right text-dark",
+      staticStyle: {
+        "font-size": "40px"
+      }
+    })])])])])])], 1);
+  }), 0)])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "appHeader-app text-light d-flex"
+  }, [_c("div", {
+    staticClass: "left"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "pageTitle text-dark"
+  }, [_vm._v("Mis Órdenes")]), _vm._v(" "), _c("div", {
+    staticClass: "right"
+  }, [_c("i", {
+    staticClass: "uil uil-phone-volume text-dark",
+    staticStyle: {
+      "font-size": "25px"
+    }
+  })])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "d-flex justify-content-between align-items-center mb-4",
+    attrs: {
+      id: "order_detail"
+    }
+  }, [_c("div", {
+    staticClass: "d-flex align-items-center justify-content-center"
+  }, [_c("span", {
+    staticClass: "fs-w-500 fs-4"
+  }, [_vm._v("Mis Órdenes")])]), _vm._v(" "), _c("div", [_c("button", {
+    staticClass: "btn btn-primary btn-sm"
+  }, [_c("i", {
+    staticClass: "uil uil-phone-volume"
+  })])])]);
+}];
 render._withStripped = true;
 
 
