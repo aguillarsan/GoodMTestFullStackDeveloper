@@ -1,5 +1,5 @@
 <template>
-    <div class="appBottomMenu">
+    <div class="appBottomMenu" v-show="path == '/home' || path == '/orders' || path == '/profile'">
         <div v-for="(option, index) in optionsMenu" class="item " :class="path == option.rute ? 'active':''"> 
             <router-link :to="option.rute">
                 <div class="col">

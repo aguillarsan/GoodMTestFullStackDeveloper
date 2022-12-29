@@ -2275,7 +2275,7 @@ var render = function render() {
   return _c("div", [_c("v-sideBar"), _vm._v(" "), _c("section", {
     staticClass: "dashboard"
   }, [_c("v-navBar"), _vm._v(" "), _c("div", {
-    staticClass: "dash-content p-30"
+    staticClass: "app-main d-flex flex-column flex-row-fluid mt-5 h-100vh"
   }, [_c("router-view")], 1)], 1), _vm._v(" "), _c("v-app-bottom-menu")], 1);
 };
 var staticRenderFns = [];
@@ -2352,6 +2352,12 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.path == "/home" || _vm.path == "/orders" || _vm.path == "/profile",
+      expression: "path == '/home' || path == '/orders' || path == '/profile'"
+    }],
     staticClass: "appBottomMenu"
   }, _vm._l(_vm.optionsMenu, function (option, index) {
     return _c("div", {
@@ -2667,6 +2673,18 @@ var Welcome = function Welcome() {
 var Home = function Home() {
   return __webpack_require__.e(/*! import() | chunks/home/index */ "chunks/home/index").then(__webpack_require__.bind(__webpack_require__, /*! ./components/home/index.vue */ "./resources/js/components/home/index.vue"));
 };
+var Orders = function Orders() {
+  return __webpack_require__.e(/*! import() | chunks/orders/order */ "chunks/orders/order").then(__webpack_require__.bind(__webpack_require__, /*! ./components/orders/order.vue */ "./resources/js/components/orders/order.vue"));
+};
+var OrderDetail = function OrderDetail() {
+  return __webpack_require__.e(/*! import() | chunks/orders/orderDetail */ "chunks/orders/orderDetail").then(__webpack_require__.bind(__webpack_require__, /*! ./components/orders/orderDetail.vue */ "./resources/js/components/orders/orderDetail.vue"));
+};
+var Profile = function Profile() {
+  return __webpack_require__.e(/*! import() | chunks/profile/profile */ "chunks/profile/profile").then(__webpack_require__.bind(__webpack_require__, /*! ./components/profile/profile.vue */ "./resources/js/components/profile/profile.vue"));
+};
+var storeDetail = function storeDetail() {
+  return __webpack_require__.e(/*! import() | chunks/home/storeDetail */ "chunks/home/storeDetail").then(__webpack_require__.bind(__webpack_require__, /*! ./components/home/storeDetail.vue */ "./resources/js/components/home/storeDetail.vue"));
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -2716,9 +2734,30 @@ var Home = function Home() {
         return next('/login');
       }
     }, {
+      path: '/store/:store_id',
+      name: 'Store Detail',
+      component: storeDetail
+      // beforeEnter: (to, from, next) => {
+      //     if (localStorage.getItem('authToken')) {
+      //         return next();
+      //     }
+      //     return next('/login')
+
+      // },
+    }, {
       path: '/orders',
       name: 'Orders',
-      component: Register,
+      component: Orders,
+      beforeEnter: function beforeEnter(to, from, next) {
+        if (localStorage.getItem('authToken')) {
+          return next();
+        }
+        return next('/login');
+      }
+    }, {
+      path: '/orders/oder_id',
+      name: 'order detail',
+      component: OrderDetail,
       beforeEnter: function beforeEnter(to, from, next) {
         if (localStorage.getItem('authToken')) {
           return next();
@@ -2728,7 +2767,7 @@ var Home = function Home() {
     }, {
       path: '/profile',
       name: 'Profile',
-      component: Register,
+      component: Profile,
       beforeEnter: function beforeEnter(to, from, next) {
         if (localStorage.getItem('authToken')) {
           return next();
@@ -36368,7 +36407,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"chunks/auth/login":1,"chunks/auth/register":1,"chunks/auth/welcome":1,"chunks/home/index":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"chunks/auth/login":1,"chunks/auth/register":1,"chunks/auth/welcome":1,"chunks/home/index":1,"chunks/orders/order":1,"chunks/orders/orderDetail":1,"chunks/profile/profile":1,"chunks/home/storeDetail":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

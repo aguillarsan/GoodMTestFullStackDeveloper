@@ -2,7 +2,11 @@
     "/js/app.js": "/js/app.js",
     "/js/chunks/auth/login.js": "/js/chunks/auth/login.js",
     "/js/chunks/auth/register.js": "/js/chunks/auth/register.js",
-    "/css/app.css": "/css/app.css",
+    "/js/chunks/auth/welcome.js": "/js/chunks/auth/welcome.js",
     "/js/chunks/home/index.js": "/js/chunks/home/index.js",
-    "/js/chunks/auth/welcome.js": "/js/chunks/auth/welcome.js"
+    "/js/chunks/orders/order.js": "/js/chunks/orders/order.js",
+    "/js/chunks/orders/orderDetail.js": "/js/chunks/orders/orderDetail.js",
+    "/js/chunks/profile/profile.js": "/js/chunks/profile/profile.js",
+    "/css/app.css": "/css/app.css",
+    "/js/chunks/home/storeDetail.js": "/js/chunks/home/storeDetail.js"
 }

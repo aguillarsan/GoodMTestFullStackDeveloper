@@ -3,7 +3,7 @@
         <v-sideBar></v-sideBar>
         <section class="dashboard">
             <v-navBar></v-navBar>
-            <div class="dash-content p-30">
+            <div class="app-main d-flex flex-column flex-row-fluid mt-5 h-100vh">
                 <router-view></router-view>
             </div>
         </section>
