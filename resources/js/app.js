@@ -20,4 +20,18 @@ Vue.use(VueRouter);
 
 const app = new Vue({
     router: new VueRouter(routes),
+    mounted(){
+        Vue.filter('moneyFormat', function (value) {
+            if (value) {
+                if (value % 1 == 0) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                } else {
+                    let val = (value / 1).toFixed(2).replace('.', ',')
+                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                }
+            }
+            return 0
+
+        });
+    }
 }).$mount('#app')

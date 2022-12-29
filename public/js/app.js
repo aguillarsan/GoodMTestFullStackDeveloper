@@ -2602,7 +2602,20 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"](_routes__WEBPACK_IMPORTED_MODULE_2__["default"])
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"](_routes__WEBPACK_IMPORTED_MODULE_2__["default"]),
+  mounted: function mounted() {
+    vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('moneyFormat', function (value) {
+      if (value) {
+        if (value % 1 == 0) {
+          return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        } else {
+          var val = (value / 1).toFixed(2).replace('.', ',');
+          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+      }
+      return 0;
+    });
+  }
 }).$mount('#app');
 
 /***/ }),
