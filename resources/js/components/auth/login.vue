@@ -5,8 +5,8 @@
                 <img src="images/logos/logo.webp" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <h1>Bienvenido!</h1>
-                <h4>complete el formulario para ingresar</h4>
+                <h1 class="fs-1">¡Bienvenido a GoodMeal!</h1>
+                <h4 class="fs-8 mt-4 text-muted">Inicia sesión y sigue ayudando al planeta</h4>
             </div>
             <div class="section mt-8 mb-5">
                 <form>

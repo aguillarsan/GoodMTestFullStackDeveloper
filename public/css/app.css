@@ -72,6 +72,7 @@
     --bs-btn-primary: #ff18a6;
     --bs-btn-primary-variant: #d1178a;
     --primary-color: #ff18a6;
+    --primary-color-variant: #d1178a;
 
     /* ====== side Bar ====== */
     --color-sidebar: linear-gradient(180deg, #EFF1F9 0%, #FCFCFC 100%);
@@ -100,6 +101,14 @@ body {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     height: 100vh;
+}
+
+a {
+    color: var(--primary-color);
+}
+
+a:hover {
+    color: var(--primary-color-variant) !important;
 }
 
 .section {
@@ -249,12 +258,13 @@ nav.close li a .link-name {
     pointer-events: none;
 }
 
+
+
+/* nav links side-bar component */
 .nav-links li a:hover i,
 .nav-links li a:hover .link-name {
     color: var(--primary-color);
 }
-
-/* nav links side-bar component */
 .nav-links li a:hover:before {
     content: "";
     position: absolute;
@@ -263,6 +273,10 @@ nav.close li a .link-name {
     width: 5px;
     border-radius: 50%;
     background-color: var(--primary-color);
+}
+
+.nav-links li a .active{
+    color: var(--primary-color);
 }
 
 /* dashboard css */
@@ -297,7 +311,7 @@ nav.close~.dashboard {
 }
 
 @media (max-width: 768px) {
-    #navBar{
+    #navBar {
         display: none !important;
     }
 }
@@ -354,6 +368,7 @@ nav.close~.dashboard .top {
     justify-content: center;
     position: relative;
 }
+
 .appBottomMenu .item a {
     color: #919CB0;
     text-decoration: none;
@@ -393,6 +408,78 @@ nav.close~.dashboard .top {
     border-radius: 3rem !important;
 }
 
+
+/* appHeadr nav pwa */
+.appHeader {
+    min-height: 56px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: env(safe-area-inset-top);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: var(--card-primary-bg);
+    color: #141515;
+    /* box-shadow: 0 3px 6px 0 rgb(0 0 0 / 10%), 0 1px 3px 0 rgb(0 0 0 / 8%); */
+}
+
+.appHeader .left {
+    left: 8px;
+    top: 0;
+}
+
+.appHeader .left,
+.appHeader .right {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+}
+
+.appHeader .pageTitle {
+    font-size: 17px;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+.appHeader .right {
+    right: 8px;
+    top: 0;
+}
+
+.appHeader .left,
+.appHeader .right {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+}
+
+.appHeader.text-light .headerButton,
+.appHeader.text-light .pageTitle {
+    color: #fff;
+}
+
+.appHeader .left .headerButton i {
+    font-size: 30px;
+    color: var(--title-icon-color);
+}
+
+
+.appHeader .left .headerButton,
+.appHeader .right .headerButton {
+    min-width: 36px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #141515;
+    position: relative;
+}
+
 .btn-primary {
     color: #fff;
     background-color: var(--bs-btn-primary);
@@ -400,9 +487,85 @@ nav.close~.dashboard .top {
 }
 
 .btn-primary:hover {
+    color: #fff !important;
     background-color: var(--bs-btn-primary-variant);
     border-color: var(--bs-btn-primary-variant);
 }
+
+.btn-white {
+    color: #000;
+    background-color: white;
+    border-color: white;
+    border: 2px solid #000;
+}
+
+.btn-white:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+/* splash Loading */
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+    background: white;
+
+}
+
+.splash.show {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+.splash.hide {
+    visibility: hidden;
+}
+
+/* animations */
+.fade-in {
+    animation: fedeIn 1s;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes bounceIn {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .bounceIn {
+    animation: bounceIn 2.5s infinite;
+  }
 
 /* Margin tops */
 .mt-0 {
@@ -651,44 +814,61 @@ nav.close~.dashboard .top {
 
 .fs-1 {
     font-size: calc(1.3rem + 0.6vw) !important;
-  }
-  
-  .fs-2 {
+}
+
+.fs-2 {
     font-size: calc(1.275rem + 0.3vw) !important;
-  }
-  
-  .fs-3 {
+}
+
+.fs-3 {
     font-size: calc(1.26rem + 0.12vw) !important;
-  }
-  
-  .fs-4 {
+}
+
+.fs-4 {
     font-size: 1.25rem !important;
-  }
-  
-  .fs-5 {
+}
+
+.fs-5 {
     font-size: 1.15rem !important;
-  }
-  
-  .fs-6 {
+}
+
+.fs-6 {
     font-size: 1.075rem !important;
-  }
-  
-  .fs-7 {
+}
+
+.fs-7 {
     font-size: 0.95rem !important;
-  }
-  
-  .fs-8 {
+}
+
+.fs-8 {
     font-size: 0.85rem !important;
-  }
-  
-  .fs-9 {
+}
+
+.fs-9 {
     font-size: 0.75rem !important;
-  }
-  
-  .fs-10 {
+}
+
+.fs-10 {
     font-size: 0.5rem !important;
-  }
-  
-  .fs-base {
+}
+
+.fs-base {
     font-size: 1rem !important;
-  }
+}
+
+.display-block {
+    display: block !important;
+}
+
+/* text color */
+
+.text-muted {
+    color: #A1A1A2 !important;
+}
+
+
+/* height */
+
+.h-100vh {
+    height: 100vh;
+}

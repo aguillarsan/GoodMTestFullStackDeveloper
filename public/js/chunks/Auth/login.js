@@ -87,7 +87,11 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "section mt-1"
-  }, [_c("h1", [_vm._v("Bienvenido!")]), _vm._v(" "), _c("h4", [_vm._v("complete el formulario para ingresar")])]);
+  }, [_c("h1", {
+    staticClass: "fs-1"
+  }, [_vm._v("¡Bienvenido a GoodMeal!")]), _vm._v(" "), _c("h4", {
+    staticClass: "fs-8 mt-4 text-muted"
+  }, [_vm._v("Inicia sesión y sigue ayudando al planeta")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

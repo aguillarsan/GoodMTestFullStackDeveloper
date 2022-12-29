@@ -102,7 +102,11 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "section mt-1"
-  }, [_c("h1", [_vm._v("Registro")]), _vm._v(" "), _c("h4", [_vm._v("Ingrese sus datos")])]);
+  }, [_c("h1", {
+    staticClass: "fs-1"
+  }, [_vm._v("Dejanos tus datos")]), _vm._v(" "), _c("h4", {
+    staticClass: "fs-8 mt-4 text-muted"
+  }, [_vm._v("Para poder ofrecer una experiencia personalizada")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;

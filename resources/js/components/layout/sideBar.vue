@@ -30,7 +30,7 @@
 
                 </li>
                 <li>
-                    <a href="">
+                    <a href="#" @click.prevent="logout()">
                         <i class="uil uil-signout"></i>
                         <span class="link-name">Cerrar sesión</span>
                     </a>
@@ -62,6 +62,12 @@
             path() {
                 return this.$route.path;
             },
+        },
+        methods: {
+            logout(){
+                localStorage.clear()
+                this.$router.push('/welcome')
+            }
         },
     }
 </script>

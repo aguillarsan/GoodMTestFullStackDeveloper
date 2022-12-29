@@ -5,8 +5,8 @@
                 <img src="images/logos/logo.webp" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <h1>Registro</h1>
-                <h4>Ingrese sus datos</h4>
+                <h1 class="fs-1">Dejanos tus datos</h1>
+                <h4 class="fs-8 mt-4 text-muted">Para poder ofrecer una experiencia personalizada</h4>
             </div>
             <div class="section mt-8 mb-5">
                 <form>

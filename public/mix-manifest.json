@@ -3,5 +3,6 @@
     "/js/chunks/auth/login.js": "/js/chunks/auth/login.js",
     "/js/chunks/auth/register.js": "/js/chunks/auth/register.js",
     "/css/app.css": "/css/app.css",
-    "/js/chunks/home/index.js": "/js/chunks/home/index.js"
+    "/js/chunks/home/index.js": "/js/chunks/home/index.js",
+    "/js/chunks/auth/welcome.js": "/js/chunks/auth/welcome.js"
 }
