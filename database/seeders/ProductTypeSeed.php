@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Store;
-use App\Models\Product;
-
-class StoreSeeder extends Seeder
+use App\Models\Product_type;
+class ProductTypeSeed extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +13,6 @@ class StoreSeeder extends Seeder
      */
     public function run()
     {
-       Store::factory(20)->has(Product::factory()->count(3), 'products')->create();
+        Product_type::factory(4)->create();
     }
 }

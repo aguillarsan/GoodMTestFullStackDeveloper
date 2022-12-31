@@ -37,6 +37,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     addProductCart: function addProductCart() {
       this.productCart += 1;
+    },
+    calculateDiscount: function calculateDiscount(product) {
+      var priceWithDiscount = Math.round(product.price * product.discount / 100);
+      return priceWithDiscount;
     }
   }
 });
@@ -194,7 +198,7 @@ var render = function render() {
       expression: "!load"
     }],
     staticClass: "container-products-store"
-  }, _vm._l(6, function (l) {
+  }, _vm._l(_vm.store.products, function (product, p) {
     return _c("div", {
       staticClass: "card card-store",
       staticStyle: {
@@ -206,7 +210,15 @@ var render = function render() {
         position: "relative",
         height: "281px"
       }
-    }, [_vm._m(1, true), _vm._v(" "), _c("div", {
+    }, [_c("div", {
+      staticClass: "product-image w-100 d-flex justify-content-center align-items-center mt-4"
+    }, [_c("img", {
+      staticClass: "image-product",
+      attrs: {
+        src: product.image,
+        width: "100"
+      }
+    })]), _vm._v(" "), _c("div", {
       staticClass: "add-product-cart"
     }, [_c("a", {
       attrs: {
@@ -232,9 +244,15 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "text-primary"
-    }, [_vm._v("$" + _vm._s(_vm._f("moneyFormat")(_vm.store.actual_price)))]), _vm._v(" "), _c("span", {
+    }, [_vm._v("$" + _vm._s(_vm._f("moneyFormat")(_vm.calculateDiscount(product))))]), _vm._v(" "), _c("span", {
       staticClass: "text-muted text-line-through"
-    }, [_vm._v(" $" + _vm._s(_vm._f("moneyFormat")(_vm.store.old_price)))])])]), _vm._v(" "), _vm._m(2, true), _vm._v(" "), _vm._m(3, true)])]);
+    }, [_vm._v(" $" + _vm._s(_vm._f("moneyFormat")(product.price)))])])]), _vm._v(" "), _c("div", {
+      staticClass: "d-flex justify-content-center align-items-center"
+    }, [_c("span", {
+      staticClass: "badge text-inherit badge-primary mb-1 fs-6"
+    }, [_vm._v("%" + _vm._s(product.discount) + " descuento")])]), _vm._v(" "), _c("div", {
+      staticClass: "description-product-store mb-5"
+    }, [_c("p", [_vm._v(_vm._s(product.name))])])])]);
   }), 0)], 1)])])]), _vm._v(" "), _c("div", {
     staticClass: "appBottomMenu type-buttom"
   }, [_c("div", {
@@ -290,32 +308,6 @@ var staticRenderFns = [function () {
       href: "#kt_tab_pane_6"
     }
   }, [_vm._v("Congelados")])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "product-image w-100 d-flex justify-content-center align-items-center mt-4"
-  }, [_c("img", {
-    staticClass: "image-product",
-    attrs: {
-      src: "/images/examples/food/meat.png",
-      width: "100"
-    }
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "d-flex justify-content-center align-items-center"
-  }, [_c("span", {
-    staticClass: "badge text-inherit badge-primary mb-1 fs-6"
-  }, [_vm._v("%50 descuento")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "description-product-store mb-5"
-  }, [_c("p", [_vm._v("Pack de papas mas bebida mas mas")])]);
 }];
 render._withStripped = true;
 
@@ -338,7 +330,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "row"
-  }, _vm._l(9, function (l) {
+  }, _vm._l(3, function (l) {
     return _c("div", {
       staticClass: "col-lg-4 mb-4"
     }, [_vm._m(0, true)]);

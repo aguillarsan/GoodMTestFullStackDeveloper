@@ -12,7 +12,7 @@ class StoreController extends Controller
 
     public function index()
     {
-        $stores = Store::paginate(20);
+        $stores = Store::paginate(10);
         return response()->json(compact('stores'));
     }
 
@@ -49,6 +49,7 @@ class StoreController extends Controller
 
     public function show(Store $store)
     {
+        $store->load('products');
         return response()->json(compact('store'));
     }
 

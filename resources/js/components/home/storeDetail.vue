@@ -70,11 +70,11 @@
                         </ul>
                         <v-skeleton-store v-show="load"></v-skeleton-store>
                         <div  v-show="!load" class="container-products-store">
-                            <div class="card card-store" v-for="l in 6" style="height:350px">
+                            <div class="card card-store" v-for="(product, p) in store.products" style="height:350px">
                                 <div class="card-store-product" style="position: relative; height: 281px;">
                                     <div
                                         class="product-image w-100 d-flex justify-content-center align-items-center mt-4">
-                                        <img src="/images/examples/food/meat.png" class="image-product" width="100">
+                                        <img :src="product.image" class="image-product" width="100">
                                     </div>
                                     <div class="add-product-cart">
                                         <a href="#" @click="addProductCart()"> 
@@ -85,16 +85,16 @@
                                     <div class="d-flex justify-content-center align-items-center mt-5">
                                         <div class="d-flex justify-content-between align-items-center" style="    width: 100%;
                                         padding: 30px;">
-                                            <span class="text-primary">${{store.actual_price | moneyFormat}}</span>
-                                            <span class="text-muted text-line-through"> ${{store.old_price |
+                                            <span class="text-primary">${{calculateDiscount(product)| moneyFormat}}</span>
+                                            <span class="text-muted text-line-through"> ${{product.price  |
                                                 moneyFormat}}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <span class="badge text-inherit badge-primary mb-1 fs-6">%50 descuento</span>
+                                        <span class="badge text-inherit badge-primary mb-1 fs-6">%{{product.discount}} descuento</span>
                                     </div>
                                     <div class="description-product-store mb-5">
-                                        <p>Pack de papas mas bebida mas mas</p>
+                                        <p>{{product.name}}</p>
                                     </div>
 
 
@@ -142,6 +142,10 @@
             },
             addProductCart(){
                 this.productCart += 1
+            },
+            calculateDiscount(product){
+              const priceWithDiscount = Math.round((product.price * product.discount)/100)
+              return priceWithDiscount
             }
         },
     }

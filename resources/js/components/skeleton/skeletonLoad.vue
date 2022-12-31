@@ -1,6 +1,6 @@
 <template>
     <div  class="row">
-        <div class="col-lg-4 mb-4" v-for="l in 9">
+        <div class="col-lg-4 mb-4" v-for="l in 3">
             <div class="card card-store">
                 <div class="store-image mb-3">
                     <div class="store-container ">

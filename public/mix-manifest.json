@@ -8,6 +8,6 @@
     "/js/chunks/orders/orderDetail.js": "/js/chunks/orders/orderDetail.js",
     "/js/chunks/profile/profile.js": "/js/chunks/profile/profile.js",
     "/js/chunks/home/storeDetail.js": "/js/chunks/home/storeDetail.js",
-    "/css/app.css": "/css/app.css",
-    "/js/chunks/shopping-cart/cartProducts.js": "/js/chunks/shopping-cart/cartProducts.js"
+    "/js/chunks/shopping-cart/cartProducts.js": "/js/chunks/shopping-cart/cartProducts.js",
+    "/css/app.css": "/css/app.css"
 }

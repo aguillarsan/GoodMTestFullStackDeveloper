@@ -223,7 +223,7 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "row"
-  }, _vm._l(9, function (l) {
+  }, _vm._l(3, function (l) {
     return _c("div", {
       staticClass: "col-lg-4 mb-4"
     }, [_vm._m(0, true)]);
