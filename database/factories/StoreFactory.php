@@ -14,9 +14,9 @@ class StoreFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement([
+            'name' => $this->faker->unique()->randomElement([
                 'GooMeal Market',
-                'Jumbo',
+                'Jumbo', 
                 'OXO',
                 'Natural King',
                 'Unimarc',

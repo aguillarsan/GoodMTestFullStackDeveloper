@@ -71,7 +71,7 @@
 
                                             </div>
                                             <div class="store-bag">
-                                                <span class="text-variant-dark">0</span>
+                                                <span class="text-variant-dark">{{store.products_count}}</span>
                                                 <i class="uil uil-shopping-bag text-dark" style="font-size:30px"></i>
                                             </div>
                                         </div>

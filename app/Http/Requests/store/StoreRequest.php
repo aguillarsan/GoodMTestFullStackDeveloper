@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -33,6 +33,8 @@ class StoreRequest extends FormRequest
             'old_price' => 'required',
             'opening_hours' => 'required',
             'closing_time' => 'required',
+            'image_store' => 'nullable|image',
+            'logo_store' => 'nullable|image'
         ];
     }
 }

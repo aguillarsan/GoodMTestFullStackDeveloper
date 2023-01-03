@@ -2,17 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Store;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\store\StoreRequest;
 
+/**
+ * @OA\Info(title="CRUD stores", version="1.0")
+ */
 class StoreController extends Controller
 {
 
+    /**
+     * @OA\Get(
+     *   path="/stores",
+     *   summary="Obtener una lista de tiendas",
+     *   @OA\Response(response="200", description="Una lista de tiendas con la cantidad de productos de cada tienda")
+     * )
+     */
     public function index()
     {
-        $stores = Store::paginate(10);
+        $stores = Store::withCount('products')->paginate(9);
         return response()->json(compact('stores'));
     }
 
@@ -21,9 +32,11 @@ class StoreController extends Controller
     {
         $request->validated();
         $store = new Store();
-        $url_image_hero_store = $this->uploadImageHeroStore($request->file('image_hero_store'));
+        $url_image_hero_store = $this->uploadFile($request->file('image_hero_store'));
+        $url_logo_store = $this->uploadFile($request->file('logo_store'));
         $store->name = $request->input('name');
         $store->image_store = $url_image_hero_store;
+        $store->logo_store =  $url_logo_store;
         $store->direction = $request->input('direction');
         $store->delivery_type_id = $request->input('delivery_type_id');
         $store->actual_price = $request->input('actual_price');
@@ -38,13 +51,14 @@ class StoreController extends Controller
         return response()->json(['message' => 'Error al crear tienda'], 500);
     }
 
-    private function uploadImageHeroStore($image)
+    public function uploadFile($file)
     {
-        $path_info = pathinfo($image->getClientOriginalName());
-        $post_path = 'images/store';
-        $rename = uniqid() . '.' . $path_info['extension'];
-        $image->move(public_path() . "/$post_path", $rename);
-        return "$post_path/$rename";
+        if ($file) {
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('uploads', $fileName);
+            return Storage::url($path);
+        }
+        return null;
     }
 
     public function show(Store $store)
@@ -58,8 +72,7 @@ class StoreController extends Controller
         $request->validated();
         $store = Store::find($id);
         $store->name = $request->input('name');
-        $url_image_hero_store = $this->uploadImageHeroStore($request->file('image_hero_store'));
-        $store->image_store = $url_image_hero_store;
+  
         $store->direction = $request->input('direction');
         $store->delivery_type_id = $request->input('delivery_type_id');
         $store->actual_price = $request->input('actual_price');

@@ -143,7 +143,7 @@ var render = function render() {
       staticClass: "store-bag"
     }, [_c("span", {
       staticClass: "text-variant-dark"
-    }, [_vm._v("0")]), _vm._v(" "), _c("i", {
+    }, [_vm._v(_vm._s(store.products_count))]), _vm._v(" "), _c("i", {
       staticClass: "uil uil-shopping-bag text-dark",
       staticStyle: {
         "font-size": "30px"

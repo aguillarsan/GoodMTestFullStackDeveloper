@@ -14,7 +14,7 @@ fi
 role=${CONTAINER_ROLE:-app}
 
 if [ "$role" = "app" ]; then
-    php artisan migrate:fresh 
+    php artisan migrate
     php artisan db:seed
     php artisan key:generate
     php artisan cache:clear;
@@ -22,7 +22,6 @@ if [ "$role" = "app" ]; then
     php artisan config:cache
     php artisan route:clear
     php artisan test
-  
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
     
     exec docker-php-entrypoint "$@"

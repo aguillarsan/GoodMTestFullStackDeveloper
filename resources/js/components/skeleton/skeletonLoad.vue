@@ -25,8 +25,7 @@
                             <span class="skeleton skeleton-text  w-80"></span>
                         </div>
                         <div class="store-detail w-100">
-                            <span class="skeleton skeleton-text w-80"></span>
-                            
+                            <span class="skeleton skeleton-text w-80"></span>                            
                         </div>
                     </div>
                 </div>
