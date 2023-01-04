@@ -57,20 +57,14 @@ var render = function render() {
     staticClass: "appHeader-app text-light d-flex"
   }, [_c("div", {
     staticClass: "left"
-  }, [_c("a", {
+  }, [_c("router-link", {
     staticClass: "headerButton goBack",
     attrs: {
-      href: "#"
-    },
-    on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.$router.go(-1);
-      }
+      to: "/orders"
     }
   }, [_c("i", {
     staticClass: "uil uil-angle-left-b md hydrated"
-  })])]), _vm._v(" "), _c("div", {
+  })])], 1), _vm._v(" "), _c("div", {
     staticClass: "pageTitle text-dark"
   }, [_vm._v("Detalle de la orden")]), _vm._v(" "), _c("div", {
     staticClass: "right"

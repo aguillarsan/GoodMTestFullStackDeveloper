@@ -9,6 +9,7 @@ Route::apiResource('/orders', 'Api\OrderController');
 Route::apiResource('/products', 'Api\ProductController');
 Route::apiResource('/shopping-cart','Api\ShoppingCartController');
 Route::get('/shopping/total-products/{store_id}','Api\ShoppingCartController@shoppingCartTotalProducts');
+Route::post('/order-products','Api\OrderController@storeOrderProducts');
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

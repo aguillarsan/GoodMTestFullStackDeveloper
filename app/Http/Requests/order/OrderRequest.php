@@ -26,6 +26,7 @@ class OrderRequest extends FormRequest
         return [
             'store_id' => 'required',
             'delivery_type_id' => 'required',
+            'total_amount' => 'required',
         ];
     }
 }

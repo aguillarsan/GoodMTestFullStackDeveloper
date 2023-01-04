@@ -794,6 +794,14 @@ nav.close~.dashboard .top {
     border-color: var(--bs-btn-primary-variant);
 }
 
+.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+    pointer-events: none;
+    background-color: var(--bs-btn-primary-variant);
+    border-color: var(--bs-btn-primary-variant);
+    opacity:0.65;
+    box-shadow: none;
+  }
+
 .btn-white {
     color: #000;
     background-color: white;

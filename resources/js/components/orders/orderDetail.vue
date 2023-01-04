@@ -2,9 +2,9 @@
     <div>
         <div class="appHeader-app  text-light d-flex">
             <div class="left">
-                <a href="#" @click.prevent="$router.go(-1)" class="headerButton goBack">
+                <router-link :to="'/orders'"  class="headerButton goBack">
                     <i class="uil uil-angle-left-b md hydrated"></i>
-                </a>
+                </router-link>
             </div>
             <div class="pageTitle text-dark">Detalle de la orden</div>
             <div class="right">

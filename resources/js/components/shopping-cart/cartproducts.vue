@@ -48,8 +48,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center align-items-center w-100 ">
-                        <button class="btn btn-primary w-30 btn-rounded btn-lg hidden-button" type="button"
-                            @click="storeOrder">Pagar</button>
+                        <button class="btn btn-primary w-30 btn-rounded btn-lg hidden-button"
+                            :disabled="orderLoad? true:false" type="button" @click="storeOrder">
+                            <span v-show="!orderLoad">Pagar</span>
+                            <div v-show="orderLoad" class="spinner-border text-secondary" role="status">
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -57,7 +61,11 @@
         <div class="appBottomMenu type-buttom">
             <div class="item p-5">
                 <div class="col">
-                    <button class="btn btn-primary w-100 btn-rounded btn-lg">Pagar</button>
+                    <button class="btn btn-primary w-100 btn-rounded btn-lg"  @click="storeOrder"  :disabled="orderLoad? true:false" >
+                        <span v-show="!orderLoad">Pagar</span>
+                        <div v-show="orderLoad" class="spinner-border text-secondary" role="status">
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -76,7 +84,8 @@
                 config_skeleton: {
                     col: 'col-lg-12',
                     load: true
-                }
+                },
+                orderLoad: false
 
 
             }
@@ -121,21 +130,32 @@
                 return totalPrice
             },
             storeOrder() {
+                this.orderLoad = true
                 let formData = new FormData
                 formData.append('store_id', this.$route.params.store_id)
                 formData.append('delivery_type_id', 1)
+                formData.append('total_amount', this.totalPriceWithDiscount)
 
                 axios.post('/api/orders', formData).then(response => {
                     const order_id = response.data.orderNumber
-                    this.$router.push('/order/'+order_id)
+                    this.storeOrderProducts(order_id);
                 }).catch(error => {
                     alert(error.message)
                 })
             },
-          
+            storeOrderProducts(order_id) {
+                let formData = new FormData
+                console.log(order_id)
+                formData.append('store_id', this.$route.params.store_id)
+                formData.append('order_id', order_id)
+                axios.post('/api/order-products', formData).then(response => {
+                    this.$router.push('/order/' + order_id)
+                    this.orderLoad = false
+                }).catch(error => {
+                    alert(error.message)
+                })
 
-
-
+            }
         },
     }
 </script>

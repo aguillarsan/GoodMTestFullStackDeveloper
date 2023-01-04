@@ -28,8 +28,8 @@ use App\Http\Requests\store\StoreRequest;
  * )
  *
  * @OA\Tag(
- *     name="Projects",
- *     description="API Endpoints of Projects"
+ *     name="GoodMead",
+ *     description="API Endpoints"
  * )
  */
 class StoreController extends Controller
@@ -58,6 +58,8 @@ class StoreController extends Controller
     /**
      * @OA\Post(
      *     path="/store",
+     *     operationId="store",
+     *     tags={"Stores"},
      *     summary="Crear una nueva tienda",
      *     @OA\RequestBody(
      *         required=true,
@@ -119,7 +121,9 @@ class StoreController extends Controller
     /**
      * @OA\Post(
      *     path="/upload-file",
-     *     summary="Cargar archivos",
+     *     operationId="uploadFile",
+     *     tags={"Stores"},
+     *     summary="Cargar imagenes de la tienda",
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -186,7 +190,9 @@ class StoreController extends Controller
     /**
      * @OA\Put(
      *     path="/store/{store}",
-     *     summary="Updates a store",
+     *     operationId="update",
+     *     tags={"Stores"},
+     *     summary="Actualizar tiendas",
      *     @OA\Parameter(
      *         name="store",
      *         in="path",
@@ -249,6 +255,8 @@ class StoreController extends Controller
     /**
      * @OA\Delete(
      *     path="/store/{store}",
+     *     operationId="destroy",
+     *     tags={"Stores"},
      *     summary="Eliminar una tienda",
      *     @OA\Parameter(
      *         name="store",

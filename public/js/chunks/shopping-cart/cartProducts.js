@@ -23,7 +23,8 @@ __webpack_require__.r(__webpack_exports__);
       config_skeleton: {
         col: 'col-lg-12',
         load: true
-      }
+      },
+      orderLoad: false
     };
   },
   created: function created() {
@@ -67,12 +68,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     storeOrder: function storeOrder() {
       var _this2 = this;
+      this.orderLoad = true;
       var formData = new FormData();
       formData.append('store_id', this.$route.params.store_id);
       formData.append('delivery_type_id', 1);
+      formData.append('total_amount', this.totalPriceWithDiscount);
       axios.post('/api/orders', formData).then(function (response) {
         var order_id = response.data.orderNumber;
-        _this2.$router.push('/order/' + order_id);
+        _this2.storeOrderProducts(order_id);
+      })["catch"](function (error) {
+        alert(error.message);
+      });
+    },
+    storeOrderProducts: function storeOrderProducts(order_id) {
+      var _this3 = this;
+      var formData = new FormData();
+      console.log(order_id);
+      formData.append('store_id', this.$route.params.store_id);
+      formData.append('order_id', order_id);
+      axios.post('/api/order-products', formData).then(function (response) {
+        _this3.$router.push('/order/' + order_id);
+        _this3.orderLoad = false;
       })["catch"](function (error) {
         alert(error.message);
       });
@@ -174,12 +190,63 @@ var render = function render() {
   }, [_c("button", {
     staticClass: "btn btn-primary w-30 btn-rounded btn-lg hidden-button",
     attrs: {
+      disabled: _vm.orderLoad ? true : false,
       type: "button"
     },
     on: {
       click: _vm.storeOrder
     }
-  }, [_vm._v("Pagar")])])], 2)])]), _vm._v(" "), _vm._m(2)]);
+  }, [_c("span", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !_vm.orderLoad,
+      expression: "!orderLoad"
+    }]
+  }, [_vm._v("Pagar")]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.orderLoad,
+      expression: "orderLoad"
+    }],
+    staticClass: "spinner-border text-secondary",
+    attrs: {
+      role: "status"
+    }
+  })])])], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "appBottomMenu type-buttom"
+  }, [_c("div", {
+    staticClass: "item p-5"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("button", {
+    staticClass: "btn btn-primary w-100 btn-rounded btn-lg",
+    attrs: {
+      disabled: _vm.orderLoad ? true : false
+    },
+    on: {
+      click: _vm.storeOrder
+    }
+  }, [_c("span", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !_vm.orderLoad,
+      expression: "!orderLoad"
+    }]
+  }, [_vm._v("Pagar")]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.orderLoad,
+      expression: "orderLoad"
+    }],
+    staticClass: "spinner-border text-secondary",
+    attrs: {
+      role: "status"
+    }
+  })])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -204,18 +271,6 @@ var staticRenderFns = [function () {
   }, [_vm._v("Ahorro")]), _vm._v(" "), _c("span", {
     staticClass: "fs-w-600 text-primary"
   }, [_vm._v("Total a pagar")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "appBottomMenu type-buttom"
-  }, [_c("div", {
-    staticClass: "item p-5"
-  }, [_c("div", {
-    staticClass: "col"
-  }, [_c("button", {
-    staticClass: "btn btn-primary w-100 btn-rounded btn-lg"
-  }, [_vm._v("Pagar")])])])]);
 }];
 render._withStripped = true;
 
