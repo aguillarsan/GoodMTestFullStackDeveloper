@@ -1,20 +1,410 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "CRUD stores",
-        "version": "1.0"
+        "title": "Api documentation",
+        "description": "Api documentation",
+        "contact": {
+            "email": "saguilarsanhuza@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.1"
     },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Demo API Server"
+        }
+    ],
     "paths": {
         "/stores": {
             "get": {
+                "tags": [
+                    "Stores"
+                ],
                 "summary": "Obtener una lista de tiendas",
-                "operationId": "f3ce0e8a0e78e1dc29164144bce03df5",
+                "operationId": "index",
                 "responses": {
                     "200": {
-                        "description": "Una lista de tiendas con la cantidad de productos de cada tienda"
+                        "description": "Una lista de tiendas con la cantidad de productos de cada tienda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "stores": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/store": {
+            "post": {
+                "summary": "Crear una nueva tienda",
+                "operationId": "ecc82910c8389bb650b63b9f6d3be9a7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "image_store",
+                                    "direction",
+                                    "delivery_type_id",
+                                    "actual_price",
+                                    "old_price",
+                                    "opening_hours",
+                                    "closing_time",
+                                    "logo_store"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Oxxo"
+                                    },
+                                    "image_store": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "/storage/images/image.jpg"
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "av los toros"
+                                    },
+                                    "delivery_type_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "actual_price": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "25000"
+                                    },
+                                    "old_price": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "25000"
+                                    },
+                                    "opening_hours": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "9:00"
+                                    },
+                                    "closing_time": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "21:00"
+                                    },
+                                    "logo_store": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "/storage/images/image.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mensaje de exito al crear la tienda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tienda creada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Mesaje de error en caso de que la tienda no es creada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al crear tienda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/upload-file": {
+            "post": {
+                "summary": "Cargar archivos",
+                "operationId": "e2db5acf3bb2c5b5d4e3a5f271d9aae0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "retornamos la url del archivo cargado"
+                    }
+                }
+            }
+        },
+        "/store/{store}": {
+            "get": {
+                "tags": [
+                    "Stores"
+                ],
+                "summary": "Recupera una tienda y sus productos",
+                "description": "Recupera una tienda y sus productos",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "El ID de la tienda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tienda recuperada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "store": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tienda no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tienda no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Updates a store",
+                "operationId": "c1763a23712c428401e7ed658b68628f",
+                "parameters": [
+                    {
+                        "name": "store",
+                        "in": "path",
+                        "description": "El ID de la tienda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "image_store",
+                                    "direction",
+                                    "delivery_type_id",
+                                    "actual_price",
+                                    "old_price",
+                                    "opening_hours",
+                                    "closing_time",
+                                    "logo_store"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Oxxo"
+                                    },
+                                    "image_store": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "/storage/images/image.jpg"
+                                    },
+                                    "direction": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "av los toros"
+                                    },
+                                    "delivery_type_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "actual_price": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "25000"
+                                    },
+                                    "old_price": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "25000"
+                                    },
+                                    "opening_hours": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "9:00"
+                                    },
+                                    "closing_time": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "21:00"
+                                    },
+                                    "logo_store": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "/storage/images/image.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tienda actualizada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tienda editada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al actualizar tienda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al editar tienda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar una tienda",
+                "operationId": "c0b93badadea225c4004bc0fd49f3038",
+                "parameters": [
+                    {
+                        "name": "store",
+                        "in": "path",
+                        "description": "El ID de la tienda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tienda eliminada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tienda eliminada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error al eliminar la tienda",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al eliminar tienda"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "API Endpoints of Projects"
+        }
+    ]
 }

@@ -26,7 +26,6 @@ class StoreRequest extends FormRequest
 
         return [
             'name' => 'required|max:150',
-            'image_store' => 'required',
             'direction' => 'required|max:255',
             'delivery_type_id' => 'required',
             'actual_price' => 'required',

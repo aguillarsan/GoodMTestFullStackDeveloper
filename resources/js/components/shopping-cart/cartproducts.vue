@@ -19,36 +19,123 @@
                             <span class="fs-w-500 fs-4">Carrito de compras</span>
                         </div>
                     </div>
-                    <div class="container-products-store mt-5">
-                        <div class="card card-store" v-for="l in 6" style="height:350px">
-                            <div class="card-store-product" style="position: relative; height: 281px;">
-                                <div class="product-image w-100 d-flex justify-content-center align-items-center mt-4">
-                                    <img src="/images/examples/food/meat.png" class="image-product" width="100">
+                    <v-skeleton-store :config_skeleton="config_skeleton"></v-skeleton-store>
+                    <div class="p-4 mt-5 w-100 d-flex justify-content-between align-items-center mb-5 card card-shopping-cart"
+                        v-for="(product_shopping, key) in products_shopping_cart">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <div class="d-flex">
+                                <img :src="product_shopping.product.image" class="image-product" width="100">
+                                <div class="display-grid m-l-05 p-3">
+                                    <span>{{product_shopping.total_product}} x ${{product_shopping.product |
+                                        calculateDiscount | moneyFormat}}</span>
+                                    <span> {{product_shopping.product.name }}</span>
                                 </div>
-                                <div class="add-product-cart" style="padding:20px">
-                                    <div classs="fs-w-400 fs-5">{{l}}</div>
-
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center mt-5">
-                                    <div class="d-flex justify-content-between align-items-center" style="    width: 100%;
-                                    padding: 30px;">
-                                        <span class="text-primary">$12.000</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <span class="badge text-inherit badge-primary mb-1 fs-6">%50 descuento</span>
-                                </div>
-                                <div class="description-product-store mb-5">
-                                    <p>Pack de papas más bebida</p>
-                                </div>
-
-
+                            </div>
+                            <div class="">
+                                <span class="fs-w-500 text-primary">{{totalPriceProduct(product_shopping) |
+                                    moneyFormat}}</span>
                             </div>
                         </div>
+                    </div>
+                    <div class=" w-100 d-flex justify-content-between align-items-center mb-5">
+                        <div class="display-grid">
+                            <span class="fs-w-300 text-dark">Ahorro</span>
+                            <span class="fs-w-600 text-primary">Total a pagar</span>
+                        </div>
+                        <div class="display-grid">
+                            <span class="fs-w-300 text-muted">-${{totalSavings | moneyFormat}}</span>
+                            <span class="fs-w-600 text-primary">${{totalPriceWithDiscount | moneyFormat}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center w-100 ">
+                        <button class="btn btn-primary w-30 btn-rounded btn-lg hidden-button" type="button"
+                            @click="storeOrder">Pagar</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="appBottomMenu type-buttom">
+            <div class="item p-5">
+                <div class="col">
+                    <button class="btn btn-primary w-100 btn-rounded btn-lg">Pagar</button>
+                </div>
+            </div>
+        </div>
     </div>
-
 </template>
+<script>
+    import skeletonLoad from '../skeleton/skeletonLoad.vue'
+    export default {
+        components: {
+            'v-skeleton-store': skeletonLoad
+        },
+        data() {
+            return {
+
+                products_shopping_cart: [],
+                config_skeleton: {
+                    col: 'col-lg-12',
+                    load: true
+                }
+
+
+            }
+        },
+        created() {
+            this.getProductsShoppingCart()
+        },
+        computed: {
+            totalPriceWithDiscount() {
+                let totalPrice = 0
+                this.products_shopping_cart.reduce((total, product) => {
+                    totalPrice += product.total_product * (product.product.price - Math.round((product.product.price * product.product.discount / 100)))
+                }, 0)
+                return totalPrice
+
+            },
+            totalSavings() {
+                let totalSaving = 0
+                this.products_shopping_cart.reduce((total, product) => {
+                    totalSaving += product.total_product * Math.round((product.product.price * product.product.discount / 100))
+                }, 0)
+                return totalSaving
+            }
+        },
+        methods: {
+            getProductsShoppingCart() {
+                axios.get('/api/shopping-cart', {
+                    params: {
+                        store_id: this.$route.params.store_id
+                    }
+                }).then(response => {
+                    this.products_shopping_cart = response.data.product_shopping_cart
+                    this.config_skeleton.load = false
+                })
+            },
+            totalPriceProduct(product_shopping) {
+                const originalPrice = product_shopping.product.price
+                const discount = product_shopping.product.discount
+                const totalProduct = product_shopping.total_product
+                const priceWithDiscount = originalPrice - Math.round((originalPrice * discount / 100))
+                const totalPrice = priceWithDiscount * totalProduct
+                return totalPrice
+            },
+            storeOrder() {
+                let formData = new FormData
+                formData.append('store_id', this.$route.params.store_id)
+                formData.append('delivery_type_id', 1)
+
+                axios.post('/api/orders', formData).then(response => {
+                    const order_id = response.data.orderNumber
+                    this.$router.push('/order/'+order_id)
+                }).catch(error => {
+                    alert(error.message)
+                })
+            },
+          
+
+
+
+        },
+    }
+</script>

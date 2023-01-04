@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\order;
+namespace App\Http\Requests\shopping_cart;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class ShoppingCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'store_id' => 'required',
-            'delivery_type_id' => 'required',
+            'product_id' => 'required',
         ];
     }
 }

@@ -13,6 +13,12 @@ Vue.prototype.$eventBus = new Vue()
 import VueRouter from 'vue-router';
 import routes from './routes';
 Vue.use(VueRouter);
+// ########################## moment ##############################
+import moment from 'moment';
+import VueMoment from 'vue-moment';
+require('moment/locale/es')
+moment.locale('es');
+Vue.use(VueMoment, { moment })
 
 // import "bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,6 +39,12 @@ const app = new Vue({
             return 0
 
         });
+        Vue.filter('dateFormat', function (val) {
+            if (!val) {
+                return 'N/A'
+            }
+            return moment(val).format("DD/MM/yyyy");
+        });
         Vue.filter('setBackgroundImageStore', function (store) {
             if (store) {
                 const image = 'background-image:url(' + store.image_store + ')';
@@ -41,8 +53,11 @@ const app = new Vue({
             }
 
         });
+        Vue.filter('calculateDiscount', function (product) {
+            const priceWithDiscount = product.price - Math.round((product.price * product.discount) / 100)
+            return priceWithDiscount
 
-
+        });
 
     }
 }).$mount('#app')

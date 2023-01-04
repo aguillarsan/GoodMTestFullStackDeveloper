@@ -628,7 +628,7 @@ nav.close~.dashboard .top {
     padding: 22px 22px;
 }
 
-.separator{
+.separator {
     display: block;
     height: 0;
     border-bottom: 1px solid #F4F4F4;
@@ -667,6 +667,12 @@ nav.close~.dashboard .top {
     box-shadow: rgb(100 208 179 / 20%) 0px 3px 8px 3px;
 }
 
+
+.card-shopping-cart {
+    border-radius: 0.8rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: none !important;
+}
 
 .order-container {
 
@@ -713,6 +719,10 @@ nav.close~.dashboard .top {
         overflow: scroll;
         overflow-x: auto;
         overflow-y: hidden;
+    }
+
+    .hidden-button {
+        display: none !important;
     }
 
 
@@ -762,6 +772,20 @@ nav.close~.dashboard .top {
     color: #fff;
     background-color: var(--bs-btn-primary);
     border-color: var(--bs-btn-primary);
+
+}
+
+.btn-check:checked+.btn.btn-primary,
+.btn-check:active+.btn.btn-primary,
+.btn.btn-primary:focus:not(.btn-active),
+.btn.btn-primary:hover:not(.btn-active),
+.btn.btn-primary:active:not(.btn-active),
+.btn.btn-primary.active,
+.btn.btn-primary.show,
+.show>.btn.btn-primary {
+    color: white;
+    border-color: var(--bs-btn-primary);
+    background-color: var(--bs-btn-primary-variant) !important;
 }
 
 .btn-primary:hover {
@@ -807,8 +831,19 @@ nav.close~.dashboard .top {
 }
 
 /* animations */
-.fade-in {
-    animation: fedeIn 1s;
+.fade-in{
+    animation: fedeIn 5s;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 @keyframes rotate {
@@ -1609,4 +1644,8 @@ nav.close~.dashboard .top {
 
 .m-l-05 {
     margin-left: 0.5rem !important;
+}
+
+.list-none {
+    list-style: none !important;
 }

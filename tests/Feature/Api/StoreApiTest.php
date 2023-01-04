@@ -18,32 +18,32 @@ class StoreApiTest extends TestCase
      */
     public function test_stores()
     {
-        // Send a GET request to the /stores endpoint
+        // Enviar una solicitud GET al endpoint /stores 
         $response = $this->get('/api/stores');
 
-        // Assert that the response has a 200 status code
+        // Comprobamos que la respuesta tiene un código de estado 200
         $response->assertStatus(200);
 
-        // Assert that the response contains the stores array
+        // Comprobamos que la respuesta contiene la matriz de tiendas
         $response->assertJsonStructure(['stores']);
     }
     public function test_show_store()
     {
-        // get a store from database
+        //Obtengo una tienda de la base de datos
         $store = Store::first();
 
-        // Send a GET request to the /stores/{id} endpoint
+        // Enviar una solicitud GET al endpoint /stores/{id} 
         $response = $this->get("/api/stores/{$store->id}");
 
-        // Assert that the response has a 200 status code
+        //Comprobamos que la respuesta tiene un código de estado 200
         $response->assertStatus(200);
 
-        // Assert that the response contains the store object
+        //Comprobamos que la respuesta contiene el objeto de la tienda
         $response->assertJsonStructure(['store']);
     }
     public function test_create_store()
     {
-        // Set up the request data
+        // Configurar los datos de la solicitud
         $data = [
             'name' => 'My Store',
             'direction' => '123 Main St',
@@ -53,37 +53,38 @@ class StoreApiTest extends TestCase
             'opening_hours' => '9:00',
             'closing_time' => '5:00',
         ];
-
+        // Enviar una solicitud POST al endpoint /stores  
         $response = $this->post('/api/stores', $data);
 
-        // Assert that the response status code is 201 (Created)
+        // Comprobamos que el código de estado de respuesta es 201 (Creado)
         $response->assertStatus(201);
-
+        // Comprobamos que la respuesta contiene un mensaje de éxito 
         $response->assertJsonFragment([
             'message' => 'Tienda creada',
         ]);
     }
     public function test_destroy_store()
     {
-        // get a test store for the database
+        // Obtengo una tienda de la base de datos
         $store = Store::first();
 
-        // Send a DELETE request to the API endpoint
+        // Enviar una solicitud DELETE al endpoint /stores   
         $response = $this->delete('/api/stores/' . $store->id);
 
-        // Assert that the response status code is 201 (Created)
+        // Comprobamos que el código de estado de respuesta es 201 
         $response->assertStatus(201);
 
-        // Assert that the response contains a success message
+        // Comprobamos que la respuesta contiene un mensaje de éxito 
         $response->assertJsonFragment(['message' => 'Tienda eliminada']);
 
-        // Assert that the store was deleted from the database
+        //Comprueba que la tienda se eliminó de la base de datos mediante softDeletes
         $this->assertSoftDeleted('stores', ['id' => $store->id]);
     }
     public function test_update_store()
     {
+        // Obtengo una tienda de la base de datos
         $store = Store::first();
-        // Set up the request data
+        // Configurar los datos de la solicitud
         $data = [
             'name' => 'Minimarket los santos',
             'direction' => '123 Main St',
@@ -94,16 +95,16 @@ class StoreApiTest extends TestCase
             'closing_time' => '5:00',
         ];
 
-        // Send a PUT request to the API endpoint
-        $response = $this->put('http://your-api-domain.com/api/stores/' . $store->id, $data);
+        // Enviar una solicitud PUT al endpoint /stores   
+        $response = $this->put('/api/stores/' . $store->id, $data);
 
-        // Assert that the response status code is 201 (Created)
+        // Comprobamos que el código de estado de respuesta es 201 
         $response->assertStatus(201);
 
-        // Assert that the response contains a success message
+        // Comprobamos que la respuesta contiene un mensaje de éxito 
         $response->assertJsonFragment(['message' => 'Tienda editada']);
 
-        // Assert that the store was updated in the database
+        //Comprobamos que la tienda se actualizó en la base de datos
         $this->assertDatabaseHas('stores', [
             'id' => $store->id,
             'name' => 'Minimarket los santos',

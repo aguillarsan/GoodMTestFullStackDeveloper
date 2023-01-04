@@ -8,7 +8,7 @@
             </div>
             <div class="pageTitle text-dark">{{store.name}}</div>
             <div class="right">
-                <span class="text-dark d-flex">{{productCart}}</span>
+                <span class="text-dark d-flex">{{total_products_shopping_cart}}</span>
                 <i class="uil uil-shopping-cart-alt text-dark" style="font-size:20px"> </i>
             </div>
         </div>
@@ -25,9 +25,9 @@
                                 <span class="fs-4 fs-w-500" style="margin-left:0.8rem;">{{store.name}}</span>
                             </div>
                             <div>
-                                <span class="text-dark">{{productCart}}</span>
-                                <router-link :to="'/shopping-cart'">
-                                <i class="uil uil-shopping-cart-alt text-dark " style="font-size:28px;"></i>
+                                <span class="text-dark">{{total_products_shopping_cart}}</span>
+                                <router-link :to="'/shopping-cart/'+store.id">
+                                    <i class="uil uil-shopping-cart-alt text-dark " style="font-size:28px;"></i>
                                 </router-link>
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6">Congelados</a>
                             </li>
                         </ul>
-                        <v-skeleton-store v-show="load"></v-skeleton-store>
-                        <div  v-show="!load" class="container-products-store">
+                        <v-skeleton-store :config_skeleton="config_skeleton"></v-skeleton-store>
+                        <div v-show="!load" class="container-products-store">
                             <div class="card card-store" v-for="(product, p) in store.products" style="height:350px">
                                 <div class="card-store-product" style="position: relative; height: 281px;">
                                     <div
@@ -77,21 +77,23 @@
                                         <img :src="product.image" class="image-product" width="100">
                                     </div>
                                     <div class="add-product-cart">
-                                        <a href="#" @click="addProductCart()"> 
+                                        <a href="#" @click.prevent="addProductCart(product)">
                                             <i class="uil uil-plus-circle text-primary" style="font-size:40px;"></i>
                                         </a>
-                                       
+
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center mt-5">
                                         <div class="d-flex justify-content-between align-items-center" style="    width: 100%;
                                         padding: 30px;">
-                                            <span class="text-primary">${{calculateDiscount(product)| moneyFormat}}</span>
-                                            <span class="text-muted text-line-through"> ${{product.price  |
+                                            <span class="text-primary">${{calculateDiscount(product)|
+                                                moneyFormat}}</span>
+                                            <span class="text-muted text-line-through"> ${{product.price |
                                                 moneyFormat}}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <span class="badge text-inherit badge-primary mb-1 fs-6">%{{product.discount}} descuento</span>
+                                        <span class="badge text-inherit badge-primary mb-1 fs-6">%{{product.discount}}
+                                            descuento</span>
                                     </div>
                                     <div class="description-product-store mb-5">
                                         <p>{{product.name}}</p>
@@ -107,11 +109,11 @@
         </div>
         <div class="appBottomMenu type-buttom">
             <div class="item ">
-                <div class="col">
-                    <router-link :to="'/shopping-cart'">
+                <div class="col p-5">
+                    <router-link :to="'/shopping-cart/'+store.id">
                         <button class="btn btn-primary w-100 btn-rounded btn-lg">Comprar</button>
                     </router-link>
-                  
+
                 </div>
             </div>
         </div>
@@ -126,26 +128,43 @@
         data() {
             return {
                 store: [],
-                load:true,
-                productCart:0
+                total_products_shopping_cart: 0,
+                config_skeleton: {
+                    load:true
+                }
             }
         },
         created() {
             this.getStoreDetail()
+            this.getTotalShoppingCart();
         },
         methods: {
             getStoreDetail() {
                 axios.get('/api/stores/' + this.$route.params.store_id).then(response => {
                     this.store = response.data.store
-                    this.load=false
+                    this.config_skeleton.load = false
                 })
             },
-            addProductCart(){
-                this.productCart += 1
+            getTotalShoppingCart() {
+                axios.get('/api/shopping/total-products/' + this.$route.params.store_id).then(response => {
+                    this.total_products_shopping_cart = response.data.total_products
+                })
             },
-            calculateDiscount(product){
-              const priceWithDiscount = Math.round((product.price * product.discount)/100)
-              return priceWithDiscount
+            addProductCart(product) {
+                console.log(product)
+                let formData = new FormData
+                formData.append(' store_id', this.$route.params.store_id)
+                formData.append('product_id', product.id)
+                axios.post('/api/shopping-cart', formData).then(response => {
+                    console.log(response.data)
+                    this.getTotalShoppingCart();
+                }).catch(error => {
+                    alert('error al agregar producto')
+                })
+            },
+            calculateDiscount(product) {
+                const priceWithDiscount = Math.round((product.price * product.discount) / 100)
+                return priceWithDiscount
             }
         },
     }

@@ -24,7 +24,7 @@
                 </ul>
 
                 <div class="row">
-                    <v-skeleton-store v-show="load"></v-skeleton-store>
+                    <v-skeleton-store :config_skeleton="config_skeleton"></v-skeleton-store>
                     <div class="col-lg-4 mb-4" v-for="(store, index) in stores.data">
                         <router-link :to="'/store/'+ store.id" class="select-card text-decoration-none" href="#">
                             <div class="card card-store">
@@ -94,7 +94,9 @@
         data() {
             return {
                 stores:[],
-                load:true
+                config_skeleton: {
+                    load:true
+                }
             }
         },
         created() {
@@ -104,7 +106,7 @@
             getStores(){
                 axios.get('/api/stores').then(response=>{
                     this.stores = response.data.stores
-                    this.load = false
+                    this.config_skeleton.load = false
                 })
             },
            

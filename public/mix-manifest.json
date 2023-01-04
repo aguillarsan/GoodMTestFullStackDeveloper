@@ -3,7 +3,7 @@
     "/js/chunks/auth/login.js": "/js/chunks/auth/login.js",
     "/js/chunks/auth/register.js": "/js/chunks/auth/register.js",
     "/js/chunks/auth/welcome.js": "/js/chunks/auth/welcome.js",
-    "/js/chunks/home/index.js": "/js/chunks/home/index.js",
+    "/js/chunks/home/stores.js": "/js/chunks/home/stores.js",
     "/js/chunks/orders/order.js": "/js/chunks/orders/order.js",
     "/js/chunks/orders/orderDetail.js": "/js/chunks/orders/orderDetail.js",
     "/js/chunks/profile/profile.js": "/js/chunks/profile/profile.js",

@@ -20,21 +20,25 @@
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <div class="col-lg-4 mb-4" v-for="(l, index) in 6">
-                            <router-link :to="'/order/'+6" class=" text-decoration-none">
-                                <div class="card card-order">
+                        <v-skeleton-store :config_skeleton="config_skeleton"/>
+                        <div class="col-lg-4 mb-4" v-for="(order, index) in orders.data" >
+                            <router-link :to="'/order/'+order.id" class=" text-decoration-none">
+                                <div class="card card-order ">
                                     <div class="order-container">
                                         <div class="order-header">
-                                            <div class="fs-w-500 fs-6 text-secondary-variant">25/06/2022</div>
+                                            <div class="fs-w-500 fs-6 text-secondary-variant">{{order.created_at | dateFormat}}</div>
                                             <div class="ribbon-order ribbon-label">Rescatada</div>
                                         </div>
                                         <div class="order-body mt-3 d-flex justify-content-between">
                                             <div class="order-detail">
                                                 <div class="display-grid">
-                                                    <div class="fs-w-500 text-dark">Tienda: Os Market</div>
-                                                    <div class="fs-w-500 text-dark">Nro° Order: 1819189</div>
-                                                    <div class="fs-w-500 text-dark">Monto Total: $15.500</div>
-                                                    <div class="fs-w-500 text-dark">Horario: 09:00 a 19:00</div>
+                                                    <div class="fs-w-500 text-dark">Tienda: {{order.store.name}}</div>
+                                                    <div class="fs-w-500 text-dark">Nro° Order: {{order.id}}</div>
+                                                    <div class="fs-w-500 text-dark">Monto Total: ${{order.total_amount |
+                                                        moneyFormat}}</div>
+                                                    <div class="fs-w-500 text-dark">
+                                                        Horario:{{order.store.opening_hours}} a
+                                                        {{order.store.closing_time}}</div>
                                                 </div>
                                             </div>
                                             <div class="order-access">
@@ -45,7 +49,6 @@
                                     </div>
                                 </div>
                             </router-link>
-
                         </div>
                     </div>
                 </div>
@@ -56,10 +59,29 @@
 </template>
 </template>
 <script>
+    import skeletonLoad from '../skeleton/skeletonLoad.vue'
     export default {
-
+        components: {
+            'v-skeleton-store': skeletonLoad
+        },
+        data() {
+            return {
+                orders: [],
+                config_skeleton: {
+                    load:true
+                }
+            }
+        },
+        created() {
+            this.getOrders()
+        },
+        methods: {
+            getOrders() {
+                axios.get('/api/orders').then(response => {
+                    this.orders = response.data.orders
+                    this.config_skeleton.load = false
+                })
+            }
+        },
     }
 </script>
-<style>
-
-</style>
