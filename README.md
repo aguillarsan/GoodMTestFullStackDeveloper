@@ -1,8 +1,8 @@
 # GoodMTestFullStackDeveloper
 
 <h1>Montar aplicación</h1>
-1-docker-compose build
-2-docker-compose up 
+<h3>1-docker-compose build</h3>
+<h3>2-docker-compose up </h3>
 
 <h1>Notas</h1>
 <h3>1-Visualizar diseño mobile</h3>
