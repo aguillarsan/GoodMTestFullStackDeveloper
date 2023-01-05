@@ -11,19 +11,20 @@ else
     echo "env file exists."
 fi
 
+npm install
 npm run prod
 
 role=${CONTAINER_ROLE:-app}
 
 if [ "$role" = "app" ]; then
-    php artisan migrate
-    php artisan db:seed
     php artisan key:generate
     php artisan cache:clear;
     php artisan config:clear
     php artisan config:cache
     php artisan route:clear
     php artisan view:cache
+    php artisan migrate
+    php artisan db:seed
     php artisan test
     php artisan l5-swagger:generate
     php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
