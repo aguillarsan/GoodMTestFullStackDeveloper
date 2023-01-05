@@ -93,7 +93,7 @@ class ProductController extends Controller
      * @OA\Post(
      *   path="/validateForm",
      *   summary="Validates a form",
-     *   requestBody=@OA\RequestBody(
+     *   @OA\RequestBody(
      *     required=true,
      *     @OA\JsonContent(
      *       type="object",
@@ -103,7 +103,7 @@ class ProductController extends Controller
      *       @OA\Property(property="discount", type="number"),
      *       @OA\Property(property="stock_product", type="number"),
      *       @OA\Property(property="product_type_id", type="number"),
-     *       @OA\Property(property="store_id", type="number")
+     *       @OA\Property(property="store_id", type="number") 
      *     )
      *   ),
      *   @OA\Response(

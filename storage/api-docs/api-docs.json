@@ -10,7 +10,7 @@
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "version": "1.1"
+        "version": "1.5"
     },
     "servers": [
         {
@@ -374,6 +374,89 @@
                 }
             }
         },
+        "/validateForm": {
+            "post": {
+                "summary": "Validates a form",
+                "operationId": "1afa3da20cdcb100982dd27bbf475aee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "price",
+                                    "discount",
+                                    "stock_product",
+                                    "product_type_id",
+                                    "store_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 150
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "discount": {
+                                        "type": "number"
+                                    },
+                                    "stock_product": {
+                                        "type": "number"
+                                    },
+                                    "product_type_id": {
+                                        "type": "number"
+                                    },
+                                    "store_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Validación exitosa"
+                    },
+                    "400": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mesaje de error",
+                                            "type": "string"
+                                        },
+                                        "errors": {
+                                            "description": "Lista de erorres de la validacion",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "field": {
+                                                        "description": "Campo que falló la validación",
+                                                        "type": "string"
+                                                    },
+                                                    "rule": {
+                                                        "description": "Regla de validación que falló",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/products/{id}": {
             "get": {
                 "tags": [
@@ -476,6 +559,156 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/shopping-cart": {
+            "get": {
+                "tags": [
+                    "ShoppingCart"
+                ],
+                "summary": "Obtiene los productos del carrito de compras",
+                "operationId": "indexShoppingCart",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "product_shopping_cart": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "product_id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "total_product": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ShoppingCart"
+                ],
+                "summary": "Agrega un producto al carrito de compras",
+                "operationId": "storeShoppingCart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_id",
+                                    "store_id"
+                                ],
+                                "properties": {
+                                    "product_id": {
+                                        "type": "integer"
+                                    },
+                                    "store_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mensaje de exito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Mensaje de error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/shopping/total-products/{store_id}": {
+            "get": {
+                "summary": "Obtiene el número total de productos en el carrito de comprast",
+                "operationId": "64c0290c4d2c8a21b81813ca6329c142",
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_products": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
                     }
                 }
             }
@@ -873,11 +1106,5 @@
                 }
             }
         }
-    },
-    "tags": [
-        {
-            "name": "GoodMead",
-            "description": "API Endpoints"
-        }
-    ]
+    }
 }
