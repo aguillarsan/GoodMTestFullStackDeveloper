@@ -23,7 +23,8 @@ __webpack_require__.r(__webpack_exports__);
       total_products_shopping_cart: 0,
       config_skeleton: {
         load: true
-      }
+      },
+      loadSpinner: null
     };
   },
   created: function created() {
@@ -34,8 +35,12 @@ __webpack_require__.r(__webpack_exports__);
     getStoreDetail: function getStoreDetail() {
       var _this = this;
       axios.get('/api/stores/' + this.$route.params.store_id).then(function (response) {
-        _this.store = response.data.store;
-        _this.config_skeleton.load = false;
+        if (response.data.store) {
+          _this.store = response.data.store;
+          _this.config_skeleton.load = false;
+          return;
+        }
+        return _this.$eventBus.$emit('alert.toast.event', response.data.code, response.data.message);
       });
     },
     getTotalShoppingCart: function getTotalShoppingCart() {
@@ -46,13 +51,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     addProductCart: function addProductCart(product) {
       var _this3 = this;
-      console.log(product);
+      this.loadSpinner = product.id;
       var formData = new FormData();
       formData.append(' store_id', this.$route.params.store_id);
       formData.append('product_id', product.id);
       axios.post('/api/shopping-cart', formData).then(function (response) {
-        console.log(response.data);
         _this3.getTotalShoppingCart();
+        _this3.$eventBus.$emit('alert.toast.event', response.data.code, response.data.message);
+        _this3.loadSpinner = null;
       })["catch"](function (error) {
         alert('error al agregar producto');
       });
@@ -253,6 +259,7 @@ var render = function render() {
     })]), _vm._v(" "), _c("div", {
       staticClass: "add-product-cart"
     }, [_c("a", {
+      "class": _vm.loadSpinner == product.id ? "display-none" : "",
       attrs: {
         href: "#"
       },
@@ -267,7 +274,13 @@ var render = function render() {
       staticStyle: {
         "font-size": "40px"
       }
-    })])]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "spinner-border text-primary",
+      "class": _vm.loadSpinner == product.id ? "" : "display-none",
+      attrs: {
+        role: "status"
+      }
+    })]), _vm._v(" "), _c("div", {
       staticClass: "d-flex justify-content-center align-items-center mt-5"
     }, [_c("div", {
       staticClass: "d-flex justify-content-between align-items-center",

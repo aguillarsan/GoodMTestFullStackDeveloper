@@ -57,45 +57,20 @@ export default ({
                 },
                 {
                     path: '/store/:store_id', name: 'Store Detail', component: storeDetail,
-                    // beforeEnter: (to, from, next) => {
-                    //     if (localStorage.getItem('authToken')) {
-                    //         return next();
-                    //     }
-                    //     return next('/login')
 
-                    // },
                 },
 
                 
                 {
                     path: '/orders', name: 'Orders', component: Orders,
-                    // beforeEnter: (to, from, next) => {
-                    //     if (localStorage.getItem('authToken')) {
-                    //         return next();
-                    //     }
-                    //     return next('/login')
-
-                    // },
                 },
                 {
                     path: '/order/:order_id', name: 'order detail', component: OrderDetail,
-                    // beforeEnter: (to, from, next) => {
-                    //     if (localStorage.getItem('authToken')) {
-                    //         return next();
-                    //     }
-                    //     return next('/login')
-
-                    // },
+        
                 },
                 {
                     path: '/profile', name: 'Profile', component: Profile,
-                    // beforeEnter: (to, from, next) => {
-                    //     if (localStorage.getItem('authToken')) {
-                    //         return next();
-                    //     }
-                    //     return next('/login')
-
-                    // },
+    
                 },
                 {
                     path: '/shopping-cart/:store_id', name: 'shopping cart', component: ShoppingCart,

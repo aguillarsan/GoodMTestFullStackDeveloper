@@ -10,7 +10,7 @@ use App\Http\Requests\store\StoreRequest;
 
 /**
  * @OA\Info(
- *      version="1.1",
+ *      version="1.5",
  *      title="Api documentation",
  *      description="Api documentation",
  *      @OA\Contact(
@@ -27,10 +27,6 @@ use App\Http\Requests\store\StoreRequest;
  *      description="Demo API Server"
  * )
  *
- * @OA\Tag(
- *     name="GoodMead",
- *     description="API Endpoints"
- * )
  */
 class StoreController extends Controller
 {
@@ -178,13 +174,19 @@ class StoreController extends Controller
      *     ),
      * )
      */
-    public function show(Store $store)
+    public function show($id)
     {
+        $store = Store::find($id);
         if ($store) {
             $store->load('products');
             return response()->json(compact('store'));
         }
-        return response()->json(['message' => 'Tienda no encontrada'], 404);
+        return response()->json(
+            [
+                'code' => 404,
+                'message' => 'Tienda no encontrada'
+            ],
+        );
     }
 
     /**

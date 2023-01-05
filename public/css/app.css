@@ -1006,8 +1006,8 @@ nav.close~.dashboard .top {
 @media (max-width: 991.98px) {
     .app-container {
         max-width: none;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
+        /* padding-left: 20px !important;
+        padding-right: 20px !important; */
 
     }
 

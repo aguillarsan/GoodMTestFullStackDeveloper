@@ -19,7 +19,10 @@ import VueMoment from 'vue-moment';
 require('moment/locale/es')
 moment.locale('es');
 Vue.use(VueMoment, { moment })
-
+// ########################## vue toast ##############################
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 // import "bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -58,6 +61,28 @@ const app = new Vue({
             return priceWithDiscount
 
         });
+        let self = this
+        this.$eventBus.$on('alert.toast.event', function (code, message) {
+            self.alertToast(code, message)
+        })
 
+    },
+    methods: {
+        alertToast(code, message) {
+            let types = {
+                200 : 'success',
+                201 : 'success',
+                500 : 'error',
+                404 : 'error',
+            }
+            const type = types[code]
+            Vue.$toast.open({
+                message: message,
+                type: type,
+                position: 'bottom-right',
+                duration: 5000
+
+            });
+        },
     }
 }).$mount('#app')

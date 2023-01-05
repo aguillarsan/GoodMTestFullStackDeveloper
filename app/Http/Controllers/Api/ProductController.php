@@ -6,6 +6,7 @@ use App\Models\Store;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\product\ProductRequest;
 
 class ProductController extends Controller
@@ -66,22 +67,87 @@ class ProductController extends Controller
      * )
      */
 
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
-        $request->validate();
-        $product = new Product();
-        $product->product_name = $request->input('product_name');
-        $product->price = $request->input('price');
-        $product->discount = $request->input('discount');
-        $product->stock_product = $request->input('stock_product');
-        $product->product_type_id = $request->input('product_type_id');
-        $res = $product->save();
-        if ($res) {
-            $store = Store::find($request->store_id);
-            $product->stores()->attach($store->id);
-            return response()->json(['message' => 'Producto creado'], 201);
+        $validation = $this->validateForm($request);
+
+        if ($validation->validate()) {
+            $product = new Product();
+            $product->name = $request->input('name');
+            $product->price = $request->input('price');
+            $product->discount = $request->input('discount');
+            $product->stock_product = $request->input('stock_product');
+            $product->product_type_id = $request->input('product_type_id');
+
+            $res = $product->save();
+            if ($res) {
+                $product->stores()->attach($request->store_id);
+                return response()->json(['message' => 'Producto creado'], 201);
+            }
+            return response()->json(['message' => 'Error crear producto'], 500);
         }
-        return response()->json(['message' => 'Error crear producto'], 500);
+        return response()->json(['errors' => $validation->errors()], 500);
+    }
+
+    /**
+     * @OA\Post(
+     *   path="/validateForm",
+     *   summary="Validates a form",
+     *   requestBody=@OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       type="object",
+     *       required={"name", "price", "discount", "stock_product", "product_type_id", "store_id"},
+     *       @OA\Property(property="name", type="string", maxLength=150),
+     *       @OA\Property(property="price", type="number"),
+     *       @OA\Property(property="discount", type="number"),
+     *       @OA\Property(property="stock_product", type="number"),
+     *       @OA\Property(property="product_type_id", type="number"),
+     *       @OA\Property(property="store_id", type="number")
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *     description="Validación exitosa"
+     *   ),
+     *   @OA\Response(
+     *     response=400,
+     *     description="Validación fallida",
+     *     @OA\JsonContent(
+     *       type="object",
+     *       @OA\Property(property="message", type="string", description="Mesaje de error"),
+     *       @OA\Property(
+     *         property="errors",
+     *         type="array",
+     *         description="Lista de erorres de la validacion",
+     *         @OA\Items(
+     *           type="object",
+     *           @OA\Property(property="field", type="string", description="Campo que falló la validación"),
+     *           @OA\Property(property="rule", type="string", description="Regla de validación que falló")
+     *         )
+     *       )
+     *     )
+     *   )
+     * )
+     */
+    public function validateForm($request)
+    {
+        $validation = Validator::make($request->all(), [
+            'name' => 'required|max:150',
+            'price' => 'required',
+            'discount' => 'required',
+            'stock_product' => 'required',
+            'product_type_id' => 'required',
+            'store_id' => 'required',
+        ], [
+            'name.required' => 'El nombre es obligatorio ',
+            'price.required' => 'El precio es obligatorio.',
+            'discount.required' => 'El descuento es obligatorio.',
+            'stock_product.required' => 'El stock es obligatorio',
+            'product_type_id.required' => 'El tipo de producto es obligatorio',
+            'store_id.required' => 'El id de la tienda es obligatorio'
+        ]);
+        return  $validation;
     }
     /**
      * @OA\Get(
@@ -114,9 +180,13 @@ class ProductController extends Controller
      *     ),
      * )
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return response()->json(compact('product'));
+        $product = Product::find($id);
+        if ($product) {
+            return response()->json(compact('product'));
+        }
+        return response()->json(['message' => 'Producto no encontrado'], 404);
     }
 
     /**
@@ -155,20 +225,23 @@ class ProductController extends Controller
      * )
      */
 
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->validate();
-        $product =  Product::find($id);
-        $product->product_name = $request->input('product_name');
-        $product->price = $request->input('price');
-        $product->discount = $request->input('discount');
-        $product->stock_product = $request->input('stock_product');
-        $product->product_type_id = $request->input('product_type_id');
-        $res = $product->save();
-        if ($res) {
-            return response()->json(['message' => 'Producto editado'], 201);
+        $validation = $this->validateForm($request);
+        if ($validation->validate()) {
+            $product =  Product::find($id);
+            $product->product_name = $request->input('product_name');
+            $product->price = $request->input('price');
+            $product->discount = $request->input('discount');
+            $product->stock_product = $request->input('stock_product');
+            $product->product_type_id = $request->input('product_type_id');
+            $res = $product->save();
+            if ($res) {
+                return response()->json(['message' => 'Producto editado'], 201);
+            }
+            return response()->json(['message' => 'Error al editar producto'], 500);
         }
-        return response()->json(['message' => 'Error crear editado'], 500);
+        return response()->json(['errors' => $validation->errors()], 500);
     }
 
     /**

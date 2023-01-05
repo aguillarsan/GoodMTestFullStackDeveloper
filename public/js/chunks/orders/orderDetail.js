@@ -30,8 +30,14 @@ __webpack_require__.r(__webpack_exports__);
     getOrderDetail: function getOrderDetail() {
       var _this = this;
       axios.get('/api/orders/' + this.$route.params.order_id).then(function (response) {
-        _this.order = response.data.order;
-        _this.load = false;
+        if (response.data.order) {
+          _this.order = response.data.order;
+          _this.load = false;
+          return;
+        }
+        return _this.$eventBus.$emit('alert.toast.event', response.data.code, response.data.message);
+      })["catch"](function (error) {
+        alert(error.message);
       });
     }
   }
@@ -92,7 +98,7 @@ var render = function render() {
     staticClass: "fs-5 fs-w-400"
   }, [_vm._v("Dirección: " + _vm._s(_vm.order.store.direction))]), _vm._v(" "), _c("div", {
     staticClass: "fs-5 fs-w-400"
-  }, [_vm._v("Horario de retiro:  " + _vm._s(_vm.order.store.opening_hours) + " a\n                                                " + _vm._s(_vm.order.store.closing_time))]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Horario de retiro:\n                                                " + _vm._s(_vm.order.store.opening_hours) + " a\n                                                " + _vm._s(_vm.order.store.closing_time))]), _vm._v(" "), _c("div", {
     staticClass: "fs-5 fs-w-400"
   }, [_vm._v("Fecha de retiro: 25/06/2022")]), _vm._v(" "), _c("div", {
     staticClass: "fs-5 fs-w-400"

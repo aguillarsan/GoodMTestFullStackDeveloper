@@ -77,9 +77,11 @@
                                         <img :src="product.image" class="image-product" width="100">
                                     </div>
                                     <div class="add-product-cart">
-                                        <a href="#" @click.prevent="addProductCart(product)">
+                                        <a href="#" @click.prevent="addProductCart(product)" :class="loadSpinner == product.id ? 'display-none':''">
                                             <i class="uil uil-plus-circle text-primary" style="font-size:40px;"></i>
                                         </a>
+                                        <div  class="spinner-border text-primary"  :class="loadSpinner == product.id ? '':'display-none'" role="status">
+                                        </div>
 
                                     </div>
                                     <div class="d-flex justify-content-center align-items-center mt-5">
@@ -130,8 +132,9 @@
                 store: [],
                 total_products_shopping_cart: 0,
                 config_skeleton: {
-                    load:true
-                }
+                    load: true
+                },
+                loadSpinner:null
             }
         },
         created() {
@@ -141,8 +144,12 @@
         methods: {
             getStoreDetail() {
                 axios.get('/api/stores/' + this.$route.params.store_id).then(response => {
-                    this.store = response.data.store
-                    this.config_skeleton.load = false
+                    if (response.data.store) {
+                        this.store = response.data.store
+                        this.config_skeleton.load = false
+                        return
+                    }
+                    return this.$eventBus.$emit('alert.toast.event', response.data.code, response.data.message)
                 })
             },
             getTotalShoppingCart() {
@@ -151,17 +158,19 @@
                 })
             },
             addProductCart(product) {
-                console.log(product)
+                this.loadSpinner = product.id
                 let formData = new FormData
                 formData.append(' store_id', this.$route.params.store_id)
                 formData.append('product_id', product.id)
                 axios.post('/api/shopping-cart', formData).then(response => {
-                    console.log(response.data)
                     this.getTotalShoppingCart();
+                    this.$eventBus.$emit('alert.toast.event', response.data.code, response.data.message)
+                    this.loadSpinner = null
                 }).catch(error => {
                     alert('error al agregar producto')
                 })
             },
+
             calculateDiscount(product) {
                 const priceWithDiscount = Math.round((product.price * product.discount) / 100)
                 return priceWithDiscount

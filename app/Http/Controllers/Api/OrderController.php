@@ -62,12 +62,21 @@ class OrderController extends Controller
      *     ),
      * )
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        $order->load('store', 'products');
-        return response()->json(compact('order'));
+        $order = Order::find($id);
+        if ($order) {
+            $order->load('store', 'products');
+            return response()->json(compact('order'));
+        }
+        return response()->json(
+            [
+                'code' => 404,
+                'message' => 'Orden no encontrada'
+            ]
+        );
     }
-        /**
+    /**
      * @OA\Post(
      *     path="/orders",
      *     operationId="storeOrders",

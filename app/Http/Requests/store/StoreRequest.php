@@ -36,4 +36,5 @@ class StoreRequest extends FormRequest
             'logo_store' => 'nullable|image'
         ];
     }
+    
 }
