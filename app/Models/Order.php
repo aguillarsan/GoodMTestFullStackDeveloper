@@ -12,11 +12,11 @@ class Order extends Model
     
     public function store()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Store::class)->withTrashed();;
     }
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')->withPivot('product_id');
+        return $this->belongsToMany(Product::class, 'order_products', 'order_id', 'product_id')->withPivot('product_id')->withTrashed();;
     }
 }

@@ -18,11 +18,13 @@ ENTRYPOINT [ "docker/entrypoint.sh" ]
 
 # ==============================================================================
 #  node
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
 FROM node:14-alpine as node
 
 WORKDIR /var/www
 COPY . .
 
 RUN npm install --global cross-env
-RUN npm run prod
+
 VOLUME /var/www/node_modules

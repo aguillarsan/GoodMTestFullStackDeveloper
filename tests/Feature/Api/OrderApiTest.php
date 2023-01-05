@@ -21,6 +21,7 @@ class OrderApiTest extends TestCase
      */
     public function test_get_orders()
     {
+        
         // Enviar una solicitud GET al endpoint /oders 
         $response = $this->get('/api/orders');
 
